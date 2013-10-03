@@ -6,4 +6,42 @@
  */
 public class TextGenerator {
 	
+	private TextParser tp;
+	private String currentWord;
+	
+	/*
+	 * Standard constructor, uses a TextParser for easy access to data.
+	 */
+	public TextGenerator(TextParser parse)
+	{
+		if (parse == null){
+			System.out.println("Error! Text Parser is null!");
+		}
+		tp = parse;
+		currentWord = "\n";
+	}
+	
+	/*
+	 * Given the previous word, generates a random number and 
+	 * uses it to choose from the possible words in the Markov array.
+	 */
+	public String getNextWord()
+	{
+		String nextWord = "";
+		int currWord = tp.getInt(currentWord);
+		double random = Math.random();
+		double[][] chanceArray = tp.getMarkovArray();
+		for (int x = 0; x < chanceArray[currWord].length; x++){
+			random -= chanceArray[currWord][x];
+			if (random <= 0.0){
+				nextWord = tp.getString(x);
+			}
+		}
+		if (nextWord == null)
+		{
+			nextWord = "\n";
+		}
+		currentWord = nextWord;
+		return nextWord;
+	}
 }

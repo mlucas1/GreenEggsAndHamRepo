@@ -84,8 +84,8 @@ public class TextParser {
 		return probabilities;
 	}
 	
-	/*
-	Under the brown land, mixing
+	/*													her daughter
+	Under the brown land, mixing (framed by the brush, then I'll know whether a brown fog of currants)
 	Winter
 	With a burnished throne
 	Burned green and gold.
