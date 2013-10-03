@@ -10,9 +10,6 @@ import java.util.*;
  */
 public class TextParser {
 
-	private BufferedReader reader; 
-	private BufferedWriter writer;
-	
 	/*
 	 * Each significant token occurring in the text is 
 	 * assigned a unique, sequential integer ID.
@@ -21,47 +18,35 @@ public class TextParser {
 	private HashMap<Integer, String> stringAssignments;
 	private int numTokens;
 	private int averageLineLength;
-	
+
 	/*
 	 * The first-order Markov array of token frequencies
 	 * (current token ID is row, next token ID is col)
 	 */
 	private double[][] probabilities;
 
-	public TextParser(String path) {
-		//Creates a new TextParser that will read from the file specified by path.
-		try {
-			reader=new BufferedReader(new FileReader(path));
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found. Path: "+path);
-			e.printStackTrace();
-		}
-		try {
-			//TODO decide on an output path
-			String outputPath="";
-			File file=new File(path);
-			file.createNewFile();
-			writer=new BufferedWriter(new FileWriter(file));
-		} catch (IOException e) {
-			System.out.println("IOException when creating output file.");
-			e.printStackTrace();
-		}
+	public TextParser(InputStream stream, boolean isRawText) {
+		//Creates a new TextParser that will read stream.
+		if(isRawText)
+			readRawText(stream);
+		else
+			readArray(stream);
 	}
-	
+
 	/*
 	 * Parses user-input text
 	 */
 	public void readRawText(InputStream in) {
-		
+		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 	}
-	
+
 	/*
 	 * Reads a saved Markov array from a text file
 	 */
 	public void readArray(InputStream in) {
-		
+		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 	}
-	
+
 	/*
 	 * Writes the Markov array to a text file
 	 */
@@ -83,23 +68,23 @@ public class TextParser {
 		}
 		//out.write(averageLineLength+"");
 	}
-	
+
 	//returns the ID for a token
 	public int getInt(String s) {
 		return intAssignments.get(s);
 	}
-	
+
 	//returns the token with ID x
 	public String getString(int x) {
 		//TODO 
 		return null;
 	}
-	
+
 	//returns the Markov array
 	public double[][] getMarkovArray() {
 		return probabilities;
 	}
-	
+
 	/*
 	Under the brown land, mixing
 	Winter
@@ -108,5 +93,5 @@ public class TextParser {
 	Where the faint moonlight, the chapel, only
 	Fishing in soda water
 	Endeavors to folly and puts a fortnight dead mountain mouth (\n?) of empty rooms
-	*/
+	 */
 }
