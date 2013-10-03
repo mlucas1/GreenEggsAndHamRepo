@@ -35,7 +35,8 @@ public class TextParser {
 			e.printStackTrace();
 		}
 		try {
-			String outputPath=""; //TODO decide on an output path
+			//TODO decide on an output path
+			String outputPath="";
 			File file=new File(path);
 			file.createNewFile();
 			writer=new BufferedWriter(new FileWriter(file));
@@ -44,6 +45,23 @@ public class TextParser {
 			e.printStackTrace();
 		}
 	}
+	
+	//returns the ID for a token
+	public int getTokenID(String s) {
+		return tokenAssignments.get(s);
+	}
+	
+	//returns the token with ID x
+	public String getToken(int x) {
+		//TODO 
+		return null;
+	}
+	
+	//returns the Markov array
+	public double[][] getMarkovArray() {
+		return probabilities;
+	}
+	
 	/*
 	Under the brown land, mixing
 	Winter
