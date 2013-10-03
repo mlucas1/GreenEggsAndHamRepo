@@ -49,7 +49,7 @@ public class TextParser {
 	}
 	
 	/*
-	 * Parses user-input text
+	 * Parses raw text
 	 */
 	public void readRawText(InputStream in) {
 		
