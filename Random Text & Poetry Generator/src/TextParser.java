@@ -1,12 +1,30 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * An object of class TextParser analyzes text, generating 
+ * a list of all the tokens, and a 2D Markov array containing
+ * the state probabilities.
+ * 
+ * @author ML, ZB, MW
+ */
 public class TextParser {
 
-	private BufferedReader reader;
+	private BufferedReader reader; 
 	private BufferedWriter writer;
 	
-	private HashMap<String, Map<Integer, String>> map;
+	/*
+	 * Each significant token occurring in the text is 
+	 * assigned a unique, sequential integer ID.
+	 */
+	private HashMap<String, Integer> tokenAssignments;
+	private int numTokens;
+	
+	/*
+	 * The first-order Markov array of token frequencies
+	 * (current token ID is row, next token ID is col)
+	 */
+	private double[][] probabilities;
 
 	public TextParser(String path) {
 		//Creates a new TextParser that will read from the file specified by path.
