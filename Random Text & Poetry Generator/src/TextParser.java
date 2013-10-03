@@ -47,6 +47,27 @@ public class TextParser {
 		}
 	}
 	
+	/*
+	 * Parses user-input text
+	 */
+	public void readRawText(InputStream in) {
+		
+	}
+	
+	/*
+	 * Reads a saved Markov array from a text file
+	 */
+	public void readArray(InputStream in) {
+		
+	}
+	
+	/*
+	 * Writes the Markov array to a text file
+	 */
+	public void writeArray(String path) {
+		
+	}
+	
 	//returns the ID for a token
 	public int getInt(String s) {
 		return intAssignments.get(s);
