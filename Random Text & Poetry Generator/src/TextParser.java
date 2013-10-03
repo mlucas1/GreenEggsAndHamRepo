@@ -17,7 +17,8 @@ public class TextParser {
 	 * Each significant token occurring in the text is 
 	 * assigned a unique, sequential integer ID.
 	 */
-	private HashMap<String, Integer> tokenAssignments;
+	private HashMap<String, Integer> intAssignments;
+	private HashMap<Integer, String> stringAssignments;
 	private int numTokens;
 	
 	/*
@@ -47,12 +48,12 @@ public class TextParser {
 	}
 	
 	//returns the ID for a token
-	public int getTokenID(String s) {
-		return tokenAssignments.get(s);
+	public int getInt(String s) {
+		return intAssignments.get(s);
 	}
 	
 	//returns the token with ID x
-	public String getToken(int x) {
+	public String getString(int x) {
 		//TODO 
 		return null;
 	}
