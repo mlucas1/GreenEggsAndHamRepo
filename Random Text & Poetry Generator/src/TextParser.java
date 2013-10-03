@@ -20,6 +20,7 @@ public class TextParser {
 	private HashMap<String, Integer> intAssignments;
 	private HashMap<Integer, String> stringAssignments;
 	private int numTokens;
+	private int averageLineLength;
 	
 	/*
 	 * The first-order Markov array of token frequencies
@@ -64,8 +65,23 @@ public class TextParser {
 	/*
 	 * Writes the Markov array to a text file
 	 */
-	public void writeArray(String path) {
-		
+	public void writeArray(String path) throws IOException {
+		File file=new File(path);
+		if(file.exists()) {
+			//TODO do something to deal with merging arrays
+		}
+		else
+			file.createNewFile();
+		BufferedWriter out=new BufferedWriter(new FileWriter(file));
+		for(int i=0; i<stringAssignments.size(); i++)
+			out.write(stringAssignments.get(i)+" ");
+		out.write("\n");
+		for(int r=0; r<probabilities.length; r++) {
+			for(int c=0; c<probabilities[r].length; c++)
+				out.write(probabilities[r][c]+" ");
+			out.write("\n");
+		}
+		//out.write(averageLineLength+"");
 	}
 	
 	//returns the ID for a token
