@@ -32,13 +32,31 @@ public class TextParser {
 		else
 			readArray(stream);
 	}
-
+	
+	private void analyzeUniqueStrings(InputStream in) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String line = "";
+		try {
+			line = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		while (line != null) {
+			for (String s: line.split("")) {
+				
+			}
+		}
+	}
+	
 	/*
 	 * Parses raw text
 	 */
 	public void readRawText(InputStream in) {
-		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+		analyzeUniqueStrings(in);
+
 	}
+	
+	
 
 	/*
 	 * Reads a saved Markov array from a text file
