@@ -33,6 +33,9 @@ public class TextParser {
 			readArray(stream);
 	}
 	
+	/*
+	 * initializes the private HashMaps with string-int ID pairings
+	 */
 	private void analyzeUniqueStrings(InputStream in) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = "";
@@ -53,7 +56,16 @@ public class TextParser {
 	 */
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
-
+		//Stuff
+		int[][] occs = new int[intAssignments.size()][intAssignments.size()];
+		calculateProbabilities(occs);
+	}
+	
+	/*
+	 * converts an int[][] of numbers of occurrences to probabilities
+	 */
+	private void calculateProbabilities(int[][] occs) {
+		
 	}
 	
 	
