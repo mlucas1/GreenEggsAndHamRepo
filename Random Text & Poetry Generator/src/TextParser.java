@@ -45,7 +45,7 @@ public class TextParser {
 			e.printStackTrace();
 		}
 		while (line != null) {
-			for (String s: line.split("")) {
+			for (String s: line.split("[]+")) {
 				
 			}
 		}
