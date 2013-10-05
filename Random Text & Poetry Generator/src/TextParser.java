@@ -32,7 +32,7 @@ public class TextParser {
 		else
 			readArray(stream);
 	}
-	
+
 	/*
 	 * initializes the private HashMaps with string-int ID pairings
 	 */
@@ -46,11 +46,11 @@ public class TextParser {
 		}
 		while (line != null) {
 			for (String s: line.split("[]+")) {
-				
+
 			}
 		}
 	}
-	
+
 	/*
 	 * Parses raw text
 	 */
@@ -60,43 +60,59 @@ public class TextParser {
 		int[][] occs = new int[intAssignments.size()][intAssignments.size()];
 		calculateProbabilities(occs);
 	}
-	
+
 	/*
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-		
+
 	}
-	
-	
+
+
 
 	/*
 	 * Reads a saved Markov array from a text file
 	 */
 	public void readArray(InputStream in) {
 		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+		try {
+			String words=reader.readLine();
+			StringTokenizer wordsTokenizer=new StringTokenizer(words);
+			intAssignments=new HashMap<String, Integer>();
+			stringAssignments=new HashMap<Integer, String>();
+			for(int i=0; wordsTokenizer.hasMoreTokens(); i++) {
+				String word=wordsTokenizer.nextToken();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/*
 	 * Writes the Markov array to a text file
 	 */
-	public void writeArray(String path) throws IOException {
+	public void writeArray(String path) {
 		File file=new File(path);
-		if(file.exists()) {
-			//TODO do something to deal with merging arrays
-		}
-		else
-			file.createNewFile();
-		BufferedWriter out=new BufferedWriter(new FileWriter(file));
-		for(int i=0; i<stringAssignments.size(); i++)
-			out.write(stringAssignments.get(i)+" ");
-		out.write("\n");
-		for(int r=0; r<probabilities.length; r++) {
-			for(int c=0; c<probabilities[r].length; c++)
-				out.write(probabilities[r][c]+" ");
+		try {
+			if(file.exists()) {
+				//TODO do something to deal with merging arrays
+			}
+			else
+				file.createNewFile();
+			BufferedWriter out=new BufferedWriter(new FileWriter(file));
+			for(int i=0; i<stringAssignments.size(); i++)
+				out.write(stringAssignments.get(i)+" ");
 			out.write("\n");
+			for(int r=0; r<probabilities.length; r++) {
+				for(int c=0; c<probabilities[r].length; c++)
+					out.write(probabilities[r][c]+" ");
+				out.write("\n");
+			}
+			//out.write(averageLineLength+"");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//out.write(averageLineLength+"");
 	}
 
 	//returns the ID for a token
