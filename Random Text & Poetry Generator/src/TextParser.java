@@ -82,6 +82,15 @@ public class TextParser {
 			stringAssignments=new HashMap<Integer, String>();
 			for(int i=0; wordsTokenizer.hasMoreTokens(); i++) {
 				String word=wordsTokenizer.nextToken();
+				intAssignments.put(word, i);
+				stringAssignments.put(i, word);
+			}
+			probabilities=new double[intAssignments.size()][intAssignments.size()];
+			String line=reader.readLine();
+			for(int r=0; line!=null; r++) {
+				StringTokenizer probabilityTokenizer=new StringTokenizer(line);
+				for(int c=0; probabilityTokenizer.hasMoreTokens(); c++)
+					probabilities[r][c]=Double.parseDouble(probabilityTokenizer.nextToken());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
