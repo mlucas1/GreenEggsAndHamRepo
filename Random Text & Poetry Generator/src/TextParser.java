@@ -204,7 +204,7 @@ public class TextParser {
 	}
 	
 
-	public int getAvgLineLength() {
+	public double getAvgLineLength() {
 		return averageLineLength;
 	}
 	
