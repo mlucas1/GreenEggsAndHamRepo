@@ -97,8 +97,32 @@ public class TextParser {
 	 */
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
-		//Stuff
 		occurrences = new int[intAssignments.size()][intAssignments.size()];
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String line = "";
+		try {
+			line = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		while (line != null) {
+			//TODO
+			/**
+			 * stuff goes here.
+			 */
+			
+			
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
 		calculateProbabilities(occurrences);
 	}
 
