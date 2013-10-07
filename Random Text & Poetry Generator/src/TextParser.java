@@ -24,6 +24,7 @@ public class TextParser {
 	 * (current token ID is row, next token ID is col)
 	 */
 	private double[][] probabilities;
+	private int[][] occurrences;
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
@@ -97,15 +98,27 @@ public class TextParser {
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
 		//Stuff
-		int[][] occs = new int[intAssignments.size()][intAssignments.size()];
-		calculateProbabilities(occs);
+		occurrences = new int[intAssignments.size()][intAssignments.size()];
+		calculateProbabilities(occurrences);
 	}
 
 	/*
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-
+		double[][] probabilities = new double[occs.length][occs[0].length];
+		for (int row = 0; row < occs.length; row++)
+		{
+			double total = 0.0;
+			for (int col = 0; col < occs[0].length; col++)
+			{
+				total += occs[row][col];
+			}
+			for (int col = 0; col < occs[0].length; col++)
+			{
+				probabilities[row][col] = occs[row][col]/total;
+			}
+		}
 	}
 
 
@@ -146,6 +159,8 @@ public class TextParser {
 		try {
 			if(file.exists()) {
 				//TODO do something to deal with merging arrays
+				TextParser merger=new TextParser(new FileInputStream(file), false);
+				merge(merger);
 			}
 			else
 				file.createNewFile();
@@ -153,15 +168,23 @@ public class TextParser {
 			for(int i=0; i<stringAssignments.size(); i++)
 				out.write(stringAssignments.get(i)+" ");
 			out.write("\n");
-			for(int r=0; r<probabilities.length; r++) {
-				for(int c=0; c<probabilities[r].length; c++)
-					out.write(probabilities[r][c]+" ");
+			for(int r=0; r<occurrences.length; r++) {
+				for(int c=0; c<occurrences[r].length; c++)
+					out.write(occurrences[r][c]+" ");
 				out.write("\n");
 			}
 			//out.write(averageLineLength+"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void merge(TextParser merger) {
+		merge(merger.getOccurrencesArray());
+	}
+	
+	public void merge(int[][] merger) {
+		
 	}
 
 	//returns the ID for a token
@@ -180,13 +203,18 @@ public class TextParser {
 		return probabilities;
 	}
 	
+
 	public int getAvgLineLength() {
 		return averageLineLength;
 	}
 	
+	public int[][] getOccurrencesArray() {
+		return occurrences;
+	}
 
-	/*													her daughter
-	Under the brown land, mixing (framed by the brush, then I'll know whether a brown fog of currants)
+
+	/*
+	Under the brown land, mixing (framed by the brush, her daughter)
 	Winter
 	With a burnished throne
 	Burned green and gold.
