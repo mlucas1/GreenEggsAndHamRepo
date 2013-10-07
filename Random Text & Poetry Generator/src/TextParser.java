@@ -24,6 +24,7 @@ public class TextParser {
 	 * (current token ID is row, next token ID is col)
 	 */
 	private double[][] probabilities;
+	private int[][] occurences;
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
@@ -57,15 +58,27 @@ public class TextParser {
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
 		//Stuff
-		int[][] occs = new int[intAssignments.size()][intAssignments.size()];
-		calculateProbabilities(occs);
+		occurences = new int[intAssignments.size()][intAssignments.size()];
+		calculateProbabilities(occurences);
 	}
 	
 	/*
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-		
+		double[][] probabilities = new double[occs.length][occs[0].length];
+		for (int row = 0; row < occs.length; row++)
+		{
+			double total = 0.0;
+			for (int col = 0; col < occs[0].length; col++)
+			{
+				total += occs[row][col];
+			}
+			for (int col = 0; col < occs[0].length; col++)
+			{
+				probabilities[row][col] = occs[row][col]/total;
+			}
+		}
 	}
 	
 	
@@ -115,8 +128,8 @@ public class TextParser {
 		return probabilities;
 	}
 
-	/*													her daughter
-	Under the brown land, mixing (framed by the brush, then I'll know whether a brown fog of currants)
+	/*
+	Under the brown land, mixing (framed by the brush, her daughter)
 	Winter
 	With a burnished throne
 	Burned green and gold.
