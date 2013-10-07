@@ -24,6 +24,7 @@ public class TextParser {
 	 * (current token ID is row, next token ID is col)
 	 */
 	private double[][] probabilities;
+	private int[][] occurrences;
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
@@ -57,8 +58,8 @@ public class TextParser {
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
 		//Stuff
-		int[][] occs = new int[intAssignments.size()][intAssignments.size()];
-		calculateProbabilities(occs);
+		occurrences = new int[intAssignments.size()][intAssignments.size()];
+		calculateProbabilities(occurrences);
 	}
 
 	/*
@@ -113,9 +114,9 @@ public class TextParser {
 			for(int i=0; i<stringAssignments.size(); i++)
 				out.write(stringAssignments.get(i)+" ");
 			out.write("\n");
-			for(int r=0; r<probabilities.length; r++) {
-				for(int c=0; c<probabilities[r].length; c++)
-					out.write(probabilities[r][c]+" ");
+			for(int r=0; r<occurrences.length; r++) {
+				for(int c=0; c<occurrences[r].length; c++)
+					out.write(occurrences[r][c]+" ");
 				out.write("\n");
 			}
 			//out.write(averageLineLength+"");
