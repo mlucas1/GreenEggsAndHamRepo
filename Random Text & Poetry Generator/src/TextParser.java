@@ -28,6 +28,7 @@ public class TextParser {
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
+		numTokens = 0;
 		if(isRawText)
 			readRawText(stream);
 		else
@@ -45,11 +46,50 @@ public class TextParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		/*
+		 * Adding \n
+		 */
+		intAssignments.put("\n", numTokens);
+		stringAssignments.put(numTokens, "\n");
+		numTokens++;
+		
+		int totalWords = 0;
+		int numLines = 0;
+		
 		while (line != null) {
-			for (String s: line.split("[]+")) {
-
+			numLines++;
+			
+			/*
+			 * Adding all the words to the HashMaps
+			 */
+			for (String s : line.split("[.,;:?! ]+")) {
+				totalWords ++;
+				if (!intAssignments.containsKey(s)) {
+					intAssignments.put(s, numTokens);
+					stringAssignments.put(numTokens, s);
+					numTokens++;
+				}
+			}
+			
+			/*
+			 * Adding all the punctuation marks to the HashMaps
+			 */
+			for (String s : line.split("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+")) {
+				if (!intAssignments.containsKey(s)) {
+					intAssignments.put(s, numTokens);
+					stringAssignments.put(numTokens, s);
+					numTokens++;
+				}
+			}
+			
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+		averageLineLength = totalWords/numLines;
 	}
 
 	/*
@@ -66,7 +106,7 @@ public class TextParser {
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-		double[][] probabilities = new double[occs.length][occs[0].length];
+		probabilities = new double[occs.length][occs[0].length];
 		for (int row = 0; row < occs.length; row++)
 		{
 			double total = 0.0;
@@ -119,6 +159,8 @@ public class TextParser {
 		try {
 			if(file.exists()) {
 				//TODO do something to deal with merging arrays
+				TextParser merger=new TextParser(new FileInputStream(file), false);
+				merge(merger);
 			}
 			else
 				file.createNewFile();
@@ -136,6 +178,14 @@ public class TextParser {
 			e.printStackTrace();
 		}
 	}
+	
+	public void merge(TextParser merger) {
+		merge(merger.getOccurrencesArray(), merger.getStringAssignments());
+	}
+	
+	public void merge(int[][] merger, HashMap<Integer, String> words) {
+		
+	}
 
 	//returns the ID for a token
 	public int getInt(String s) {
@@ -152,6 +202,24 @@ public class TextParser {
 	public double[][] getMarkovArray() {
 		return probabilities;
 	}
+	
+
+	public int getAvgLineLength() {
+		return averageLineLength;
+	}
+	
+	public int[][] getOccurrencesArray() {
+		return occurrences;
+	}
+	
+	public HashMap<String, Integer> getIntAssignment() {
+		return intAssignments;
+	}
+	
+	public HashMap<Integer, String> getStringAssignments() {
+		return stringAssignments;
+	}
+
 
 	/*
 	Under the brown land, mixing (framed by the brush, her daughter)
