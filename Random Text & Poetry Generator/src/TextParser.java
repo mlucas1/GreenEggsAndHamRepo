@@ -27,6 +27,7 @@ public class TextParser {
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
+		numTokens = 0;
 		if(isRawText)
 			readRawText(stream);
 		else
@@ -44,11 +45,50 @@ public class TextParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		/*
+		 * Adding \n
+		 */
+		intAssignments.put("\n", numTokens);
+		stringAssignments.put(numTokens, "\n");
+		numTokens++;
+		
+		int totalWords = 0;
+		int numLines = 0;
+		
 		while (line != null) {
-			for (String s: line.split("[]+")) {
-
+			numLines++;
+			
+			/*
+			 * Adding all the words to the HashMaps
+			 */
+			for (String s : line.split("[.,;:?! ]+")) {
+				totalWords ++;
+				if (!intAssignments.containsKey(s)) {
+					intAssignments.put(s, numTokens);
+					stringAssignments.put(numTokens, s);
+					numTokens++;
+				}
+			}
+			
+			/*
+			 * Adding all the punctuation marks to the HashMaps
+			 */
+			for (String s : line.split("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+")) {
+				if (!intAssignments.containsKey(s)) {
+					intAssignments.put(s, numTokens);
+					stringAssignments.put(numTokens, s);
+					numTokens++;
+				}
+			}
+			
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+		averageLineLength = totalWords/numLines;
 	}
 
 	/*
@@ -139,6 +179,11 @@ public class TextParser {
 	public double[][] getMarkovArray() {
 		return probabilities;
 	}
+	
+	public int getAvgLineLength() {
+		return averageLineLength;
+	}
+	
 
 	/*													her daughter
 	Under the brown land, mixing (framed by the brush, then I'll know whether a brown fog of currants)
