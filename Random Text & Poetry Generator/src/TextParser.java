@@ -66,7 +66,7 @@ public class TextParser {
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-		double[][] probabilities = new double[occs.length][occs[0].length];
+		probabilities = new double[occs.length][occs[0].length];
 		for (int row = 0; row < occs.length; row++)
 		{
 			double total = 0.0;
@@ -140,10 +140,10 @@ public class TextParser {
 	}
 	
 	public void merge(TextParser merger) {
-		merge(merger.getOccurrencesArray());
+		merge(merger.getOccurrencesArray(), merger.getStringAssignments());
 	}
 	
-	public void merge(int[][] merger) {
+	public void merge(int[][] merger, HashMap<Integer, String> words) {
 		
 	}
 
@@ -165,6 +165,14 @@ public class TextParser {
 	
 	public int[][] getOccurrencesArray() {
 		return occurrences;
+	}
+	
+	public HashMap<String, Integer> getIntAssignment() {
+		return intAssignments;
+	}
+	
+	public HashMap<Integer, String> getStringAssignments() {
+		return stringAssignments;
 	}
 
 	/*
