@@ -119,6 +119,8 @@ public class TextParser {
 		try {
 			if(file.exists()) {
 				//TODO do something to deal with merging arrays
+				TextParser merger=new TextParser(new FileInputStream(file), false);
+				merge(merger);
 			}
 			else
 				file.createNewFile();
@@ -136,6 +138,14 @@ public class TextParser {
 			e.printStackTrace();
 		}
 	}
+	
+	public void merge(TextParser merger) {
+		merge(merger.getOccurrencesArray());
+	}
+	
+	public void merge(int[][] merger) {
+		
+	}
 
 	//returns the ID for a token
 	public int getInt(String s) {
@@ -151,6 +161,10 @@ public class TextParser {
 	//returns the Markov array
 	public double[][] getMarkovArray() {
 		return probabilities;
+	}
+	
+	public int[][] getOccurrencesArray() {
+		return occurrences;
 	}
 
 	/*
