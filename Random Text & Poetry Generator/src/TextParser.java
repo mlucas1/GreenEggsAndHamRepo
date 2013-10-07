@@ -24,7 +24,7 @@ public class TextParser {
 	 * (current token ID is row, next token ID is col)
 	 */
 	private double[][] probabilities;
-	private int[][] occurences;
+	private int[][] occurrences;
 
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
@@ -33,7 +33,7 @@ public class TextParser {
 		else
 			readArray(stream);
 	}
-	
+
 	/*
 	 * initializes the private HashMaps with string-int ID pairings
 	 */
@@ -46,22 +46,22 @@ public class TextParser {
 			e.printStackTrace();
 		}
 		while (line != null) {
-			for (String s: line.split("")) {
-				
+			for (String s: line.split("[]+")) {
+
 			}
 		}
 	}
-	
+
 	/*
 	 * Parses raw text
 	 */
 	public void readRawText(InputStream in) {
 		analyzeUniqueStrings(in);
 		//Stuff
-		occurences = new int[intAssignments.size()][intAssignments.size()];
-		calculateProbabilities(occurences);
+		occurrences = new int[intAssignments.size()][intAssignments.size()];
+		calculateProbabilities(occurrences);
 	}
-	
+
 	/*
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
@@ -80,36 +80,61 @@ public class TextParser {
 			}
 		}
 	}
-	
-	
+
+
 
 	/*
 	 * Reads a saved Markov array from a text file
 	 */
 	public void readArray(InputStream in) {
 		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+		try {
+			String words=reader.readLine();
+			StringTokenizer wordsTokenizer=new StringTokenizer(words);
+			intAssignments=new HashMap<String, Integer>();
+			stringAssignments=new HashMap<Integer, String>();
+			for(int i=0; wordsTokenizer.hasMoreTokens(); i++) {
+				String word=wordsTokenizer.nextToken();
+				intAssignments.put(word, i);
+				stringAssignments.put(i, word);
+			}
+			probabilities=new double[intAssignments.size()][intAssignments.size()];
+			String line=reader.readLine();
+			for(int r=0; line!=null; r++) {
+				StringTokenizer probabilityTokenizer=new StringTokenizer(line);
+				for(int c=0; probabilityTokenizer.hasMoreTokens(); c++)
+					probabilities[r][c]=Double.parseDouble(probabilityTokenizer.nextToken());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/*
 	 * Writes the Markov array to a text file
 	 */
-	public void writeArray(String path) throws IOException {
+	public void writeArray(String path) {
 		File file=new File(path);
-		if(file.exists()) {
-			//TODO do something to deal with merging arrays
-		}
-		else
-			file.createNewFile();
-		BufferedWriter out=new BufferedWriter(new FileWriter(file));
-		for(int i=0; i<stringAssignments.size(); i++)
-			out.write(stringAssignments.get(i)+" ");
-		out.write("\n");
-		for(int r=0; r<probabilities.length; r++) {
-			for(int c=0; c<probabilities[r].length; c++)
-				out.write(probabilities[r][c]+" ");
+		try {
+			if(file.exists()) {
+				//TODO do something to deal with merging arrays
+			}
+			else
+				file.createNewFile();
+			BufferedWriter out=new BufferedWriter(new FileWriter(file));
+			for(int i=0; i<stringAssignments.size(); i++)
+				out.write(stringAssignments.get(i)+" ");
 			out.write("\n");
+			for(int r=0; r<occurrences.length; r++) {
+				for(int c=0; c<occurrences[r].length; c++)
+					out.write(occurrences[r][c]+" ");
+				out.write("\n");
+			}
+			//out.write(averageLineLength+"");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//out.write(averageLineLength+"");
 	}
 
 	//returns the ID for a token
