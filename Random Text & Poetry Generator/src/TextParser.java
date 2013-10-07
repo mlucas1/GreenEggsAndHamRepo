@@ -184,7 +184,16 @@ public class TextParser {
 	}
 	
 	public void merge(int[][] merger, HashMap<Integer, String> words) {
-		
+		for(Integer i:words.keySet()) {
+			String word=words.get(i);
+			if(!intAssignments.keySet().contains(word)) {
+				intAssignments.put(word, intAssignments.size());
+				stringAssignments.put(stringAssignments.size(), word);
+			}
+		}
+		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
+		//TODO add the occurrences in each array (occurrences and merger) into newOccurrences
+		occurrences=newOccurrences;
 	}
 
 	//returns the ID for a token
