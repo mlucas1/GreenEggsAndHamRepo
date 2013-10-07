@@ -27,14 +27,18 @@ public class TextGenerator {
 	 */
 	public String generateText(int numLines)
 	{
+		int maxLineLength = (int)(tp.getAverageLineLength()*1.3);
 		String poem = "";
+		int wordNum = 0;
 		int line = 1;
 		while (line <= numLines)
 		{
 			poem += getNextWord();
-			if (currentWord.equals("\n"))
+			wordNum++;
+			if (currentWord.equals("\n") || wordNum >= maxLineLength)
 			{
 				line++;
+				wordNum = 0;
 			}
 		}
 		return poem;

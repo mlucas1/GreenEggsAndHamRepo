@@ -17,7 +17,7 @@ public class TextParser {
 	private HashMap<String, Integer> intAssignments;
 	private HashMap<Integer, String> stringAssignments;
 	private int numTokens;
-	private int averageLineLength;
+	private double averageLineLength;
 
 	/*
 	 * The first-order Markov array of token frequencies
