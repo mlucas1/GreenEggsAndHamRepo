@@ -63,7 +63,7 @@ public class TextParser {
 			/*
 			 * Adding all the words to the HashMaps
 			 */
-			for (String s : line.split("[.,;:?! ]+")) {
+			for (String s : line.split("[ ]+")) {
 				totalWords ++;
 				if (!intAssignments.containsKey(s)) {
 					intAssignments.put(s, numTokens);
@@ -72,22 +72,6 @@ public class TextParser {
 				}
 			}
 			
-			/*
-			 * Adding all the punctuation marks to the HashMaps
-			 */
-			for (String s : line.split("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+")) {
-				if (!intAssignments.containsKey(s)) {
-					intAssignments.put(s, numTokens);
-					stringAssignments.put(numTokens, s);
-					numTokens++;
-				}
-			}
-			
-			try {
-				line = reader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 		averageLineLength = totalWords/numLines;
 	}
@@ -107,10 +91,16 @@ public class TextParser {
 		}
 		
 		while (line != null) {
-			//TODO
 			/**
 			 * stuff goes here.
 			 */
+			String[] tokens = line.split("[ ]+");
+			
+			occurrences[getInt("\n")][getInt(tokens[0])]++;
+			for (int i = 1; i < tokens.length-1; i++) {
+				occurrences[getInt(tokens[i])][getInt(tokens[i+1])]++;
+			}
+			
 			
 			
 			try {
