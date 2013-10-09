@@ -219,14 +219,13 @@ public class TextParser {
 		for(int r=0; r<occurrences.length; r++)
 			for(int c=0; c<occurrences[r].length; c++)
 				newOccurrences[r][c]=occurrences[r][c];
-		for(Integer i:words.keySet()) {
-			int row=intAssignments.get(words.get(i));
-			for(Integer j:words.keySet()) {
-				int col=intAssignments.get(words.get(j));
-				newOccurrences[row][col]+=merger[i.intValue()][j.intValue()];
+		for(Integer originalRow:words.keySet()) {
+			int newRow=intAssignments.get(words.get(originalRow));
+			for(Integer originalCol:words.keySet()) {
+				int newCol=intAssignments.get(words.get(originalCol));
+				newOccurrences[newRow][newCol]+=merger[originalRow.intValue()][originalCol.intValue()];
 			}
 		}
-		//TODO add the occurrences in each array (occurrences and merger) into newOccurrences
 		occurrences=newOccurrences;
 	}
 
