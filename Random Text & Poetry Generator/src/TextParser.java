@@ -216,6 +216,16 @@ public class TextParser {
 			}
 		}
 		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
+		for(int r=0; r<occurrences.length; r++)
+			for(int c=0; c<occurrences[r].length; c++)
+				newOccurrences[r][c]=occurrences[r][c];
+		for(Integer i:words.keySet()) {
+			int row=intAssignments.get(words.get(i));
+			for(Integer j:words.keySet()) {
+				int col=intAssignments.get(words.get(j));
+				newOccurrences[row][col]+=merger[i.intValue()][j.intValue()];
+			}
+		}
 		//TODO add the occurrences in each array (occurrences and merger) into newOccurrences
 		occurrences=newOccurrences;
 	}
