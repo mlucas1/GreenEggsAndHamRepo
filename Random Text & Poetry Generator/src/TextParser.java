@@ -159,6 +159,8 @@ public class TextParser {
 			stringAssignments=new HashMap<Integer, String>();
 			for(int i=0; wordsTokenizer.hasMoreTokens(); i++) {
 				String word=wordsTokenizer.nextToken();
+				if(word.equals("\\n"))
+					word.equals("\n");
 				intAssignments.put(word, i);
 				stringAssignments.put(i, word);
 			}
@@ -182,15 +184,18 @@ public class TextParser {
 		File file=new File(path);
 		try {
 			if(file.exists()) {
-				//TODO do something to deal with merging arrays
 				TextParser merger=new TextParser(new FileInputStream(file), false);
 				merge(merger);
 			}
 			else
 				file.createNewFile();
 			BufferedWriter out=new BufferedWriter(new FileWriter(file));
-			for(int i=0; i<stringAssignments.size(); i++)
-				out.write(stringAssignments.get(i)+" ");
+			for(int i=0; i<stringAssignments.size(); i++) {
+				String word=stringAssignments.get(i);
+				if(word.equals("\n"))
+					word="\\n";
+				out.write(word+" ");
+			}
 			out.write("\n");
 			for(int r=0; r<occurrences.length; r++) {
 				for(int c=0; c<occurrences[r].length; c++)
@@ -198,6 +203,7 @@ public class TextParser {
 				out.write("\n");
 			}
 			//out.write(averageLineLength+"");
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
