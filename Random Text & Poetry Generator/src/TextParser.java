@@ -227,7 +227,6 @@ public class TextParser {
 
 	//returns the token with ID x
 	public String getString(int x) {
-		//TODO 
 		return stringAssignments.get(x);
 	}
 
