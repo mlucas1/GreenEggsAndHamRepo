@@ -170,8 +170,7 @@ public class TextParser {
 	/*
 	 * Writes the Markov array to a text file
 	 */
-	public void writeArray(String path) {
-		File file=new File(path);
+	public void writeArray(File file) {
 		try {
 			if(file.exists()) {
 				TextParser merger=new TextParser(new FileInputStream(file), false);
