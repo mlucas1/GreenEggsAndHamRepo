@@ -29,6 +29,8 @@ public class TextParser {
 	public TextParser(InputStream stream, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
 		numTokens = 0;
+		intAssignments=new HashMap<String, Integer>();
+		stringAssignments=new HashMap<Integer, String>();
 		if(isRawText)
 			readRawText(stream);
 		else
@@ -39,6 +41,7 @@ public class TextParser {
 	 * initializes the private HashMaps with string-int ID pairings
 	 */
 	private void analyzeUniqueStrings(InputStream in) {
+		System.out.println("Analyzing unique strings...");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = "";
 		try {
@@ -58,7 +61,9 @@ public class TextParser {
 		int numLines = 0;
 		
 		while (line != null) {
+			
 			numLines++;
+			System.out.println("Analyzing line number "+numLines);
 			
 			/*
 			 * Adding all the words to the HashMaps
@@ -71,7 +76,11 @@ public class TextParser {
 					numTokens++;
 				}
 			}
-			
+			try {
+				line=reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		averageLineLength = totalWords/numLines;
 	}
@@ -80,6 +89,7 @@ public class TextParser {
 	 * Parses raw text
 	 */
 	public void readRawText(InputStream in) {
+		System.out.println("Reading raw text...");
 		analyzeUniqueStrings(in);
 		occurrences = new int[intAssignments.size()][intAssignments.size()];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -100,19 +110,12 @@ public class TextParser {
 			for (int i = 1; i < tokens.length-1; i++) {
 				occurrences[getInt(tokens[i])][getInt(tokens[i+1])]++;
 			}
-			
-			
-			
 			try {
 				line = reader.readLine();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
 		calculateProbabilities(occurrences);
 	}
 
@@ -172,11 +175,11 @@ public class TextParser {
 	 */
 	public void writeArray(File file) {
 		try {
-			if(file.exists()) {
+			if(file.length()!=0) {
 				TextParser merger=new TextParser(new FileInputStream(file), false);
 				merge(merger);
 			}
-			else
+			else if(!file.exists())
 				file.createNewFile();
 			BufferedWriter out=new BufferedWriter(new FileWriter(file));
 			for(int i=0; i<stringAssignments.size(); i++) {

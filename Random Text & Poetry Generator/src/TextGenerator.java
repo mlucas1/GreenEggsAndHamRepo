@@ -27,6 +27,7 @@ public class TextGenerator {
 	 */
 	public String generateText(int numLines)
 	{
+		System.out.println("Generating text...");
 		int maxLineLength = (int)(tp.getAvgLineLength()*1.3);
 		String poem = "";
 		int wordNum = 0;

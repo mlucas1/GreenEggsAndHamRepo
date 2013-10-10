@@ -1,14 +1,18 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class MarkovTester {
 	public static void main(String[] args) throws IOException {
-		TextParser parser=new TextParser(MarkovTester.class.getResourceAsStream("seuss.txt"), true);
+		InputStream in=new FileInputStream("seuss.txt");
+		System.out.println(in);
+		TextParser parser=new TextParser(in, true);
 		TextGenerator generator=new TextGenerator(parser);
-		generator.generateText(25);
+		System.out.println("\nThe result is: \n"+generator.generateText(25));
 		File file=new File("arrays/seuss.txt");
-		file.mkdirs();
+		//file.mkdir();
 		file.createNewFile();
 		parser.writeArray(file);
 	}
