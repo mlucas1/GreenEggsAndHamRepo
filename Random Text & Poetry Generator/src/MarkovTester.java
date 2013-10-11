@@ -1,16 +1,15 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+
+import javax.swing.JOptionPane;
 
 
 public class MarkovTester {
 	public static void main(String[] args) throws IOException {
-		InputStream in=new FileInputStream("seuss.txt");
+		InputStream in=new BufferedInputStream(new FileInputStream(new File("seuss.txt")));
 		System.out.println(in);
 		TextParser parser=new TextParser(in, true);
 		TextGenerator generator=new TextGenerator(parser);
-		System.out.println("\nThe result is: \n"+generator.generateText(25));
+		JOptionPane.showMessageDialog(null, "The result is: \n"+generator.generateText(15));
 		File file=new File("arrays/seuss.txt");
 		//file.mkdir();
 		file.createNewFile();

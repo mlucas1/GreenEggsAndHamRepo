@@ -70,7 +70,7 @@ public class TextParser {
 			 */
 			for (String s : line.split("[ ]+")) {
 				totalWords ++;
-				if (!intAssignments.containsKey(s)) {
+				if (!intAssignments.containsKey(s)&&!s.equals("")) {
 					intAssignments.put(s, numTokens);
 					stringAssignments.put(numTokens, s);
 					numTokens++;
@@ -90,7 +90,17 @@ public class TextParser {
 	 */
 	public void readRawText(InputStream in) {
 		System.out.println("Reading raw text...");
+		try {
+			in.mark(in.available());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		analyzeUniqueStrings(in);
+		try {
+			in.reset();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		occurrences = new int[intAssignments.size()][intAssignments.size()];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = "";
@@ -104,8 +114,15 @@ public class TextParser {
 			/**
 			 * stuff goes here.
 			 */
+			if(line.equals("")) {
+				try {
+					line=reader.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				continue;
+			}
 			String[] tokens = line.split("[ ]+");
-			
 			occurrences[getInt("\n")][getInt(tokens[0])]++;
 			for (int i = 1; i < tokens.length-1; i++) {
 				occurrences[getInt(tokens[i])][getInt(tokens[i+1])]++;
@@ -157,13 +174,16 @@ public class TextParser {
 				intAssignments.put(word, i);
 				stringAssignments.put(i, word);
 			}
-			probabilities=new double[intAssignments.size()][intAssignments.size()];
 			String line=reader.readLine();
+			StringTokenizer occurrencesTokenizer=new StringTokenizer(line);
+			occurrences=new int[occurrencesTokenizer.countTokens()][occurrencesTokenizer.countTokens()];
 			for(int r=0; line!=null; r++) {
-				StringTokenizer probabilityTokenizer=new StringTokenizer(line);
-				for(int c=0; probabilityTokenizer.hasMoreTokens(); c++)
-					probabilities[r][c]=Double.parseDouble(probabilityTokenizer.nextToken());
+				occurrencesTokenizer=new StringTokenizer(line);
+				for(int c=0; c<occurrences[r].length; c++)
+					occurrences[r][c]=Integer.parseInt(occurrencesTokenizer.nextToken());
+				line=reader.readLine();
 			}
+			calculateProbabilities(occurrences);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -206,22 +226,38 @@ public class TextParser {
 	}
 	
 	public void merge(int[][] merger, HashMap<Integer, String> words) {
+		int newLineInt=-1;
 		for(Integer i:words.keySet()) {
 			String word=words.get(i);
+			if(word.equals("\\n")) {
+				word="\n";
+				newLineInt=i.intValue();
+			}
 			if(!intAssignments.keySet().contains(word)) {
 				intAssignments.put(word, intAssignments.size());
 				stringAssignments.put(stringAssignments.size(), word);
 			}
 		}
+		words.put(new Integer(newLineInt), "\n");
 		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
 		for(int r=0; r<occurrences.length; r++)
 			for(int c=0; c<occurrences[r].length; c++)
 				newOccurrences[r][c]=occurrences[r][c];
+		System.out.println("Words:");
 		for(Integer originalRow:words.keySet()) {
+			System.out.println(words.get(originalRow));
 			int newRow=intAssignments.get(words.get(originalRow));
 			for(Integer originalCol:words.keySet()) {
 				int newCol=intAssignments.get(words.get(originalCol));
 				newOccurrences[newRow][newCol]+=merger[originalRow.intValue()][originalCol.intValue()];
+				if(newRow!=originalRow) {
+					System.out.println("Different rows: "+originalRow+" is now "+newRow);
+					return;
+				}
+				if(newCol!=originalCol) {
+					System.out.println("Different cols: "+originalCol+" is now "+newCol);
+					return;
+				}
 			}
 		}
 		occurrences=newOccurrences;
@@ -229,7 +265,13 @@ public class TextParser {
 
 	//returns the ID for a token
 	public int getInt(String s) {
+		try {
 		return intAssignments.get(s);
+		} catch(NullPointerException e) {
+			System.out.println("NullPointerException in getInt(String s). s is: \""+s+"\"");
+			e.printStackTrace();
+			return -1;
+		}
 	}
 
 	//returns the token with ID x
