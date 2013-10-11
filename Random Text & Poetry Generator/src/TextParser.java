@@ -101,9 +101,6 @@ public class TextParser {
 		}
 		
 		while (line != null) {
-			/**
-			 * stuff goes here.
-			 */
 			if(line.equals("")) {
 				try {
 					line=reader.readLine();
@@ -157,6 +154,7 @@ public class TextParser {
 					}*/
 					probabilities[row][col]=0.0;
 				}
+				probabilities[row][col] = (double)(occs[row][col])/total;
 			}
 		}
 	}

@@ -31,10 +31,8 @@ public class PoemWindow extends JFrame{
 		constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
 		
-		constraints.weightx = 1.0;
+		constraints.weightx = 0.4;
 		constraints.weighty = 1.0;
-		constraints.gridheight = 6;
-		constraints.gridwidth = 4;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridheight = 1;
@@ -76,6 +74,7 @@ public class PoemWindow extends JFrame{
 		
 		constraints.gridx = 1;
 		constraints.gridy = 0;
+		constraints.weightx = 10;
 		constraints.gridheight = 6;
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
 		poemText = new JTextPane();
