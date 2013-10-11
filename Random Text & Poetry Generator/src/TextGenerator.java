@@ -56,7 +56,12 @@ public class TextGenerator {
 	public String getNextWord()
 	{
 		String nextWord = "";
-		int currWord = tp.getInt(currentWord);
+		int currWord;
+		try {
+		currWord = tp.getInt(currentWord);
+		}catch(NullPointerException e) {
+			return null;
+		}
 		double random = Math.random();
 		double[][] chanceArray = tp.getMarkovArray();
 		for (int x = 0; x < chanceArray[currWord].length; x++){

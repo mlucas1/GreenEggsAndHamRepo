@@ -114,11 +114,13 @@ public class TextParser {
 			}
 			line=line.trim();
 			String[] tokens = line.split("[ ]+");
-			if(getInt(tokens[0])==-1) {
-				System.out.println("Line :\""+line+"\"");
-			}
+			System.out.print("[");
+			for(int i=0; i<tokens.length; i++)
+				System.out.print(tokens[i]+", ");
+			System.out.println("]");
 			occurrences[getInt("\n")][getInt(tokens[0])]++;
-			for (int i = 1; i < tokens.length-1; i++) {
+			occurrences[getInt(tokens[tokens.length-1])][getInt("\n")]++;
+			for (int i = 0; i < tokens.length-1; i++) {
 				occurrences[getInt(tokens[i])][getInt(tokens[i+1])]++;
 			}
 			try {
@@ -144,7 +146,17 @@ public class TextParser {
 			}
 			for (int col = 0; col < occs[0].length; col++)
 			{
-				probabilities[row][col] = occs[row][col]/total;
+				if(total!=0)
+					probabilities[row][col] = occs[row][col]/total;
+				else {
+					/*for(int r=0; r<occs.length; r++) {
+						System.out.print("[");
+						for(int c=0; c<occs[r].length; c++)
+							System.out.print(occs[r][c]+", ");
+						System.out.println("]");
+					}*/
+					probabilities[row][col]=0.0;
+				}
 			}
 		}
 	}
