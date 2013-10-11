@@ -27,16 +27,21 @@ public class TextGenerator {
 	 */
 	public String generateText(int numLines)
 	{
+		System.out.println("Generating text...");
 		int maxLineLength = (int)(tp.getAvgLineLength()*1.3);
 		String poem = "";
 		int wordNum = 0;
 		int line = 1;
 		while (line <= numLines)
 		{
-			poem += getNextWord();
+			poem += getNextWord() + " ";
 			wordNum++;
 			if (currentWord.equals("\n") || wordNum >= maxLineLength)
 			{
+				if(wordNum>=maxLineLength)
+					poem+="\n";
+				else
+					poem=poem.substring(0, poem.length()-1);
 				line++;
 				wordNum = 0;
 			}
@@ -58,10 +63,12 @@ public class TextGenerator {
 			random -= chanceArray[currWord][x];
 			if (random <= 0.0){
 				nextWord = tp.getString(x);
+				System.out.println("Current word is: "+currentWord+", next word is: "+nextWord);
+				break;
 			}
 		}
-		if (nextWord == null)
-		{
+		if (nextWord == null /*|| nextWord.equals("")*/) //If it equals "", then there is still a bug somewhere.
+		{											 //This is my current fix to this problem. -Zachary
 			nextWord = "\n";
 		}
 		currentWord = nextWord;
