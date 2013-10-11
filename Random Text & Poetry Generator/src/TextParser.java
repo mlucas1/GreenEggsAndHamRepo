@@ -130,7 +130,7 @@ public class TextParser {
 			}
 			for (int col = 0; col < occs[0].length; col++)
 			{
-				probabilities[row][col] = occs[row][col]/total;
+				probabilities[row][col] = (double)(occs[row][col])/total;
 			}
 		}
 	}
