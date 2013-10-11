@@ -67,7 +67,7 @@ public class TextGenerator {
 				break;
 			}
 		}
-		if (nextWord == null || nextWord.equals("")) //If it equals "", then there is still a bug somewhere.
+		if (nextWord == null /*|| nextWord.equals("")*/) //If it equals "", then there is still a bug somewhere.
 		{											 //This is my current fix to this problem. -Zachary
 			nextWord = "\n";
 		}

@@ -26,15 +26,15 @@ public class TextParser {
 	private double[][] probabilities;
 	private int[][] occurrences;
 
-	public TextParser(InputStream stream, boolean isRawText) {
+	public TextParser(InputStream streamOne, InputStream streamTwo, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
 		numTokens = 0;
 		intAssignments=new HashMap<String, Integer>();
 		stringAssignments=new HashMap<Integer, String>();
 		if(isRawText)
-			readRawText(stream);
+			readRawText(streamOne, streamTwo);
 		else
-			readArray(stream);
+			readArray(streamOne);
 	}
 
 	/*
@@ -88,21 +88,11 @@ public class TextParser {
 	/*
 	 * Parses raw text
 	 */
-	public void readRawText(InputStream in) {
+	public void readRawText(InputStream inOne, InputStream inTwo) {
 		System.out.println("Reading raw text...");
-		try {
-			in.mark(in.available());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		analyzeUniqueStrings(in);
-		try {
-			in.reset();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		analyzeUniqueStrings(inOne);
 		occurrences = new int[intAssignments.size()][intAssignments.size()];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(inTwo));
 		String line = "";
 		try {
 			line = reader.readLine();
@@ -122,7 +112,11 @@ public class TextParser {
 				}
 				continue;
 			}
+			line=line.trim();
 			String[] tokens = line.split("[ ]+");
+			if(getInt(tokens[0])==-1) {
+				System.out.println("Line :\""+line+"\"");
+			}
 			occurrences[getInt("\n")][getInt(tokens[0])]++;
 			for (int i = 1; i < tokens.length-1; i++) {
 				occurrences[getInt(tokens[i])][getInt(tokens[i+1])]++;
@@ -170,7 +164,7 @@ public class TextParser {
 			for(int i=0; wordsTokenizer.hasMoreTokens(); i++) {
 				String word=wordsTokenizer.nextToken();
 				if(word.equals("\\n"))
-					word.equals("\n");
+					word="\n";
 				intAssignments.put(word, i);
 				stringAssignments.put(i, word);
 			}
@@ -196,7 +190,7 @@ public class TextParser {
 	public void writeArray(File file) {
 		try {
 			if(file.length()!=0) {
-				TextParser merger=new TextParser(new FileInputStream(file), false);
+				TextParser merger=new TextParser(new FileInputStream(file), new FileInputStream(file), false);
 				merge(merger);
 			}
 			else if(!file.exists())
@@ -238,7 +232,9 @@ public class TextParser {
 				stringAssignments.put(stringAssignments.size(), word);
 			}
 		}
-		words.put(new Integer(newLineInt), "\n");
+		if(newLineInt!=-1)
+			
+			words.put(new Integer(newLineInt), "\n");
 		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
 		for(int r=0; r<occurrences.length; r++)
 			for(int c=0; c<occurrences[r].length; c++)
@@ -249,7 +245,10 @@ public class TextParser {
 			int newRow=intAssignments.get(words.get(originalRow));
 			for(Integer originalCol:words.keySet()) {
 				int newCol=intAssignments.get(words.get(originalCol));
+				try {
 				newOccurrences[newRow][newCol]+=merger[originalRow.intValue()][originalCol.intValue()];
+				}catch(Exception e){
+					System.out.println("Out of bounds: newRow="+newRow+", newCol="+newCol+", oRow="+originalRow+", oCol="+originalCol);}
 				if(newRow!=originalRow) {
 					System.out.println("Different rows: "+originalRow+" is now "+newRow);
 					return;
