@@ -26,11 +26,31 @@ public class Controller implements ActionListener {
 		{
 			if (buttonText.equals("Refresh Poem"))
 			{
-				 
+				 if (!textLoaded)
+				 {
+					 window.setPoemText("You must load some text to " +
+	"analyze before generating poetry. \n Preset Styles gives a list of " +
+	"example text files for analysis, \n while User Text allows you to " +
+	"enter or upload your own text files. ");
+				 }
+				 else
+				 {
+					 
+				 }
 			}
 			else if (buttonText.equals("Read Aloud"))
 			{
-				
+				if (!textLoaded)
+				{
+					window.setPoemText("You must load and generate some text to" +
+	" analyze before generating poetry. \n Preset Styles gives a list of " +
+	"example text files for analysis, \n while User Text allows you to " +
+	"enter or upload your own text files. ");
+				}
+				else
+				{
+					
+				}
 			}
 			else if (buttonText.equals("Preset Styles"))
 			{

@@ -101,9 +101,6 @@ public class TextParser {
 		}
 		
 		while (line != null) {
-			/**
-			 * stuff goes here.
-			 */
 			if(line.equals("")) {
 				try {
 					line=reader.readLine();
