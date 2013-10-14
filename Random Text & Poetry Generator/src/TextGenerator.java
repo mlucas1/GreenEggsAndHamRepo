@@ -8,6 +8,7 @@ public class TextGenerator {
 	
 	private TextParser tp;
 	private String currentWord;
+	private String poem;
 	
 	/*
 	 * Standard constructor, uses a TextParser for easy access to data.
@@ -29,7 +30,7 @@ public class TextGenerator {
 	{
 		System.out.println("Generating text...");
 		int maxLineLength = (int)(tp.getAvgLineLength()*1.3);
-		String poem = "";
+		poem = "";
 		int wordNum = 0;
 		int line = 1;
 		while (line <= numLines)
