@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -82,7 +85,26 @@ public class TextGenerator {
 		currentWord = nextWord;
 		return nextWord;
 	}
-	
+
+	public void saveLines(int chosenStart, int chosenEnd)
+	{
+		String[] lines = poem.split("\n");
+		String toSave = "";
+		for (int x = chosenStart; x < chosenEnd; x++)
+		{
+			toSave += lines[x]+" @ ";
+		}
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(new File("Saved_Lines")));
+			bw.write(toSave);
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return;
+	}
 	public void readAloud(String s) {
 		try {
 			Runtime.getRuntime().exec("say " + "\"" + s + "\"");
