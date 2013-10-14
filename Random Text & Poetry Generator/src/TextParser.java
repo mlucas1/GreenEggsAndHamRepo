@@ -101,7 +101,13 @@ public class TextParser {
 		}
 		
 		while (line != null) {
-			if(line.equals("")) {
+			boolean isWhitespace=true;
+			for(int i=0; i<line.length(); i++) {
+				if(!Character.isWhitespace(line.charAt(i))) {
+					isWhitespace=false;
+				}
+			}
+			if(line.equals("")||isWhitespace) {
 				try {
 					line=reader.readLine();
 				} catch (IOException e) {
