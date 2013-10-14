@@ -85,7 +85,7 @@ public class TextGenerator {
 		currentWord = nextWord;
 		return nextWord;
 	}
-	
+
 	public void saveLines(int chosenStart, int chosenEnd)
 	{
 		String[] lines = poem.split("\n");
@@ -105,4 +105,13 @@ public class TextGenerator {
 		}
 		return;
 	}
+	public void readAloud() {
+		try {
+			Runtime.getRuntime().exec("say " + poem);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
