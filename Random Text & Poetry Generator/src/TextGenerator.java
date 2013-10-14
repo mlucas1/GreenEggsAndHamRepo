@@ -80,4 +80,6 @@ public class TextGenerator {
 		currentWord = nextWord;
 		return nextWord;
 	}
+	
+	
 }
