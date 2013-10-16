@@ -139,6 +139,7 @@ public class TextParser {
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
+		System.out.println(occs.length);
 		probabilities = new double[occs.length][occs[0].length];
 		for (int row = 0; row < occs.length; row++)
 		{
