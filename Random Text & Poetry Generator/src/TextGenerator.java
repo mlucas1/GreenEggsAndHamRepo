@@ -105,11 +105,10 @@ public class TextGenerator {
 		}
 		return;
 	}
-	public void readAloud() {
+	public void readAloud(String s) {
 		try {
-			Runtime.getRuntime().exec("say " + poem);
+			Runtime.getRuntime().exec("say " + "\"" + s + "\"");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

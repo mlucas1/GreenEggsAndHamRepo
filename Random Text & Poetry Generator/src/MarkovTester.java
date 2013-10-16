@@ -11,6 +11,9 @@ public class MarkovTester {
 		TextParser parser=new TextParser(inOne, inTwo, true);
 		TextGenerator generator=new TextGenerator(parser);
 		JOptionPane.showMessageDialog(null, "The result is: \n"+generator.generateText(15));
+		String result = generator.generateText(30);
+		JOptionPane.showMessageDialog(null, "The result is: \n"+result);
+		generator.readAloud(result);
 		/*File file=new File("arrays/Eliot.txt");
 		//file.mkdir();
 		file.createNewFile();
