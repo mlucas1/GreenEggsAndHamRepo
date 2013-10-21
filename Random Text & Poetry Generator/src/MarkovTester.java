@@ -10,7 +10,6 @@ public class MarkovTester {
 		//System.out.println(in);
 		TextParser parser=new TextParser(inOne, inTwo, true);
 		TextGenerator generator=new TextGenerator(parser);
-		JOptionPane.showMessageDialog(null, "The result is: \n"+generator.generateText(15));
 		String result = generator.generateText(30);
 		generator.readAloud(result);
 		JOptionPane.showMessageDialog(null, "The result is: \n"+result);
