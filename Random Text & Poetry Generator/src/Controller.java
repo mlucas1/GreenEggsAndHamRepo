@@ -11,11 +11,19 @@ public class Controller implements ActionListener {
 	private TextGenerator generator;
 	private PoemWindow window;
 	private boolean textLoaded;
+	private int lines;
 	
 	public Controller()
 	{
 		window = new PoemWindow(this);
+		lines = 25;
 		textLoaded = false;
+	}
+	
+	public void loadText()
+	{
+		//TODO: get presets...
+		textLoaded = true;
 	}
 	
 	public void actionPerformed(ActionEvent ae) {
@@ -35,7 +43,7 @@ public class Controller implements ActionListener {
 				 }
 				 else
 				 {
-					 
+					 window.setPoemText(generator.generateText(lines));
 				 }
 			}
 			else if (buttonText.equals("Read Aloud"))
@@ -49,7 +57,7 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
-					
+					generator.readAloud(window.getPoemText());
 				}
 			}
 			else if (buttonText.equals("Preset Styles"))

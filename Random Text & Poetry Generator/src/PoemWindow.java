@@ -95,5 +95,10 @@ public class PoemWindow extends JFrame{
 	{
 		poemText.setText(poem);
 	}
+	
+	public String getPoemText()
+	{
+		return poemText.getText();
+	}
 
 }
