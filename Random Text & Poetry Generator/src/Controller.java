@@ -1,9 +1,14 @@
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class Controller implements ActionListener {
@@ -12,6 +17,7 @@ public class Controller implements ActionListener {
 	private PoemWindow window;
 	private boolean textLoaded;
 	private int lines;
+	private String[] presets;
 	
 	public Controller()
 	{
@@ -62,7 +68,13 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("Preset Styles"))
 			{
-				
+				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]));
+				try {
+					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+				} catch (FileNotFoundException e) {
+					window.setPoemText("Cannot find file. ");
+				}
+				generator = new TextGenerator(parse);
 			}
 			else if (buttonText.equals("User Text"))
 			{
