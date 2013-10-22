@@ -61,6 +61,7 @@ public class TextGenerator {
 	 */
 	public String getNextWord()
 	{
+		//TODO NEEDS TO BE REWRITTEN TO USE SHORT PROBABILITIES INSTEAD OF DOUBLES
 		String nextWord = "";
 		int currWord;
 		try {
@@ -68,11 +69,11 @@ public class TextGenerator {
 		}catch(NullPointerException e) {
 			return null;
 		}
-		double random = Math.random();
-		double[][] chanceArray = tp.getMarkovArray();
+		short random = (short) (32767*Math.random());
+		short[][] chanceArray = tp.getMarkovArray();
 		for (int x = 0; x < chanceArray[currWord].length; x++){
 			random -= chanceArray[currWord][x];
-			if (random <= 0.0){
+			if (random <= 0){
 				nextWord = tp.getString(x);
 				System.out.println("Current word is: "+currentWord+", next word is: "+nextWord);
 				break;

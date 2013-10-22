@@ -18,14 +18,14 @@ public class TextParser {
 	private HashMap<Integer, String> stringAssignments;
 	public int numUniqueTokens;
 	public int numWords;
-	private double averageLineLength;
+	private int averageLineLength;
 
 	/*
 	 * The first-order Markov array of token frequencies
 	 * (current token ID is row, next token ID is col)
 	 */
-	private double[][] probabilities;
-	private int[][] occurrences;
+	private short[][] probabilities;
+	private short[][] occurrences;
 
 	public TextParser(InputStream streamOne, InputStream streamTwo, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
@@ -95,7 +95,7 @@ public class TextParser {
 	public void readRawText(InputStream inOne, InputStream inTwo) {
 		//System.out.println("Reading raw text...");
 		analyzeUniqueStrings(inOne);
-		occurrences = new int[intAssignments.size()][intAssignments.size()];
+		occurrences = new short[intAssignments.size()][intAssignments.size()];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inTwo));
 		String line = "";
 		try {
@@ -142,12 +142,12 @@ public class TextParser {
 	/*
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
-	private void calculateProbabilities(int[][] occs) {
+	private void calculateProbabilities(short[][] occs) {
 		//System.out.println(occs.length);
-		probabilities = new double[occs.length][occs[0].length];
+		probabilities = new short[occs.length][occs[0].length];
 		for (int row = 0; row < occs.length; row++)
 		{
-			double total = 0.0;
+			int total = 0;
 			for (int col = 0; col < occs[0].length; col++)
 			{
 				total += occs[row][col];
@@ -155,7 +155,7 @@ public class TextParser {
 			for (int col = 0; col < occs[0].length; col++)
 			{
 				if(total!=0)
-					probabilities[row][col] = occs[row][col]/total;
+					probabilities[row][col] = (short) (32767 * ((double) occs[row][col]/total));
 				else {
 					/*for(int r=0; r<occs.length; r++) {
 						//System.out.print("[");
@@ -163,7 +163,7 @@ public class TextParser {
 							//System.out.print(occs[r][c]+", ");
 						//System.out.println("]");
 					}*/
-					probabilities[row][col]=0.0;
+					probabilities[row][col]=0;
 				}
 				//probabilities[row][col] = (double)(occs[row][col])/total;
 			}
@@ -191,15 +191,15 @@ public class TextParser {
 			}
 			String line=reader.readLine();
 			StringTokenizer occurrencesTokenizer=new StringTokenizer(line);
-			occurrences=new int[occurrencesTokenizer.countTokens()][occurrencesTokenizer.countTokens()];
+			occurrences=new short[occurrencesTokenizer.countTokens()][occurrencesTokenizer.countTokens()];
 			for(int r=0; r<occurrences.length; r++) {
 				occurrencesTokenizer=new StringTokenizer(line);
 				for(int c=0; c<occurrences[r].length; c++)
-					occurrences[r][c]=Integer.parseInt(occurrencesTokenizer.nextToken());
+					occurrences[r][c]=Short.parseShort(occurrencesTokenizer.nextToken());
 				line=reader.readLine();
 			}
 			//line=reader.readLine();
-			averageLineLength=Double.parseDouble(reader.readLine());
+			averageLineLength= (int) Double.parseDouble(reader.readLine());
 			calculateProbabilities(occurrences);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -242,7 +242,7 @@ public class TextParser {
 		merge(merger.getOccurrencesArray(), merger.getStringAssignments());
 	}
 	
-	public void merge(int[][] merger, HashMap<Integer, String> words) {
+	public void merge(short[][] merger, HashMap<Integer, String> words) {
 		int newLineInt=-1;
 		for(Integer i:words.keySet()) {
 			String word=words.get(i);
@@ -257,7 +257,7 @@ public class TextParser {
 		}
 		if(newLineInt!=-1)
 			words.put(new Integer(newLineInt), "\n");
-		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
+		short[][] newOccurrences=new short[intAssignments.size()][intAssignments.size()];
 		for(int r=0; r<occurrences.length; r++)
 			for(int c=0; c<occurrences[r].length; c++)
 				newOccurrences[r][c]=occurrences[r][c];
@@ -302,7 +302,7 @@ public class TextParser {
 	}
 
 	//returns the Markov array
-	public double[][] getMarkovArray() {
+	public short[][] getMarkovArray() {
 		return probabilities;
 	}
 	
@@ -311,7 +311,7 @@ public class TextParser {
 		return averageLineLength;
 	}
 	
-	public int[][] getOccurrencesArray() {
+	public short[][] getOccurrencesArray() {
 		return occurrences;
 	}
 	
