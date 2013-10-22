@@ -78,6 +78,7 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("User Text"))
 			{
+				String userText = JOptionPane.showInputDialog(null, "Enter your text: ");
 				
 			}
 			else if (buttonText.equals("Save Line"))
