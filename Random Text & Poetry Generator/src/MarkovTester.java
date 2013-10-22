@@ -15,8 +15,14 @@ public class MarkovTester {
 		//JOptionPane.showMessageDialog(null, "The result is: \n"+result);
 		//generator.readAloud(result);
 		//File file=new File("arrays/Whitman.txt");
+		String result = generator.generateText(30);
+		generator.readAloud(result);
+		System.out.println("Total Words: " + parser.numWords);
+		System.out.println("Unique Words: " + parser.numUniqueTokens);
+		JOptionPane.showMessageDialog(null, "The result is: \n"+result);
+		/*File file=new File("arrays/Eliot.txt");
 		//file.mkdir();
 		//file.createNewFile();
-		//parser.writeArray(file);
+		//parser.writeArray(file);*/
 	}
 }

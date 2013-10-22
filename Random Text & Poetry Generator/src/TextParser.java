@@ -16,7 +16,8 @@ public class TextParser {
 	 */
 	private HashMap<String, Integer> intAssignments;
 	private HashMap<Integer, String> stringAssignments;
-	private int numTokens;
+	public int numUniqueTokens;
+	public int numWords;
 	private double averageLineLength;
 
 	/*
@@ -28,7 +29,7 @@ public class TextParser {
 
 	public TextParser(InputStream streamOne, InputStream streamTwo, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
-		numTokens = 0;
+		numUniqueTokens = 0;
 		intAssignments=new HashMap<String, Integer>();
 		stringAssignments=new HashMap<Integer, String>();
 		if(isRawText)
@@ -53,9 +54,9 @@ public class TextParser {
 		/*
 		 * Adding \n
 		 */
-		intAssignments.put("\n", numTokens);
-		stringAssignments.put(numTokens, "\n");
-		numTokens++;
+		intAssignments.put("\n", numUniqueTokens);
+		stringAssignments.put(numUniqueTokens, "\n");
+		numUniqueTokens++;
 		
 		int totalWords = 0;
 		int numLines = 0;
@@ -71,9 +72,9 @@ public class TextParser {
 			for (String s : line.split("[ ]+")) {
 				totalWords ++;
 				if (!intAssignments.containsKey(s)&&!s.equals("")) {
-					intAssignments.put(s, numTokens);
-					stringAssignments.put(numTokens, s);
-					numTokens++;
+					intAssignments.put(s, numUniqueTokens);
+					stringAssignments.put(numUniqueTokens, s);
+					numUniqueTokens++;
 				}
 			}
 			try {
@@ -82,7 +83,10 @@ public class TextParser {
 				e.printStackTrace();
 			}
 		}
+		numWords = totalWords;
 		averageLineLength = totalWords/numLines;
+		System.out.println("Total Words: " + numWords);
+		System.out.println("Unique Words: " + numUniqueTokens);
 	}
 
 	/*
