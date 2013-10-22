@@ -78,6 +78,7 @@ public class TextGenerator {
 				break;
 			}
 		}
+		System.out.println("next word: "+nextWord);
 		if (nextWord == null /*|| nextWord.equals("")*/) //If it equals "", then there is still a bug somewhere.
 		{											 //This is my current fix to this problem. -Zachary
 			nextWord = "\n";

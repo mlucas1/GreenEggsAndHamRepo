@@ -42,7 +42,7 @@ public class TextParser {
 	 * initializes the private HashMaps with string-int ID pairings
 	 */
 	private void analyzeUniqueStrings(InputStream in) {
-		System.out.println("Analyzing unique strings...");
+		//System.out.println("Analyzing unique strings...");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = "";
 		try {
@@ -64,7 +64,7 @@ public class TextParser {
 		while (line != null) {
 			
 			numLines++;
-			System.out.println("Analyzing line number "+numLines);
+			//System.out.println("Analyzing line number "+numLines);
 			
 			/*
 			 * Adding all the words to the HashMaps
@@ -93,7 +93,7 @@ public class TextParser {
 	 * Parses raw text
 	 */
 	public void readRawText(InputStream inOne, InputStream inTwo) {
-		System.out.println("Reading raw text...");
+		//System.out.println("Reading raw text...");
 		analyzeUniqueStrings(inOne);
 		occurrences = new int[intAssignments.size()][intAssignments.size()];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inTwo));
@@ -121,10 +121,10 @@ public class TextParser {
 			}
 			line=line.trim();
 			String[] tokens = line.split("[ ]+");
-			System.out.print("[");
+			//System.out.print("[");
 			for(int i=0; i<tokens.length; i++)
-				System.out.print(tokens[i]+", ");
-			System.out.println("]");
+				//System.out.print(tokens[i]+", ");
+			//System.out.println("]");
 			occurrences[getInt("\n")][getInt(tokens[0])]++;
 			occurrences[getInt(tokens[tokens.length-1])][getInt("\n")]++;
 			for (int i = 0; i < tokens.length-1; i++) {
@@ -143,7 +143,7 @@ public class TextParser {
 	 * converts an int[][] of numbers of occurrences to probabilities
 	 */
 	private void calculateProbabilities(int[][] occs) {
-		System.out.println(occs.length);
+		//System.out.println(occs.length);
 		probabilities = new double[occs.length][occs[0].length];
 		for (int row = 0; row < occs.length; row++)
 		{
@@ -158,14 +158,14 @@ public class TextParser {
 					probabilities[row][col] = occs[row][col]/total;
 				else {
 					/*for(int r=0; r<occs.length; r++) {
-						System.out.print("[");
+						//System.out.print("[");
 						for(int c=0; c<occs[r].length; c++)
-							System.out.print(occs[r][c]+", ");
-						System.out.println("]");
+							//System.out.print(occs[r][c]+", ");
+						//System.out.println("]");
 					}*/
 					probabilities[row][col]=0.0;
 				}
-				probabilities[row][col] = (double)(occs[row][col])/total;
+				//probabilities[row][col] = (double)(occs[row][col])/total;
 			}
 		}
 	}
@@ -192,12 +192,14 @@ public class TextParser {
 			String line=reader.readLine();
 			StringTokenizer occurrencesTokenizer=new StringTokenizer(line);
 			occurrences=new int[occurrencesTokenizer.countTokens()][occurrencesTokenizer.countTokens()];
-			for(int r=0; line!=null; r++) {
+			for(int r=0; r<occurrences.length; r++) {
 				occurrencesTokenizer=new StringTokenizer(line);
 				for(int c=0; c<occurrences[r].length; c++)
 					occurrences[r][c]=Integer.parseInt(occurrencesTokenizer.nextToken());
 				line=reader.readLine();
 			}
+			//line=reader.readLine();
+			averageLineLength=Double.parseDouble(reader.readLine());
 			calculateProbabilities(occurrences);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -229,7 +231,7 @@ public class TextParser {
 					out.write(occurrences[r][c]+" ");
 				out.write("\n");
 			}
-			//out.write(averageLineLength+"");
+			out.write("\n"+averageLineLength);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -254,28 +256,28 @@ public class TextParser {
 			}
 		}
 		if(newLineInt!=-1)
-			
 			words.put(new Integer(newLineInt), "\n");
 		int[][] newOccurrences=new int[intAssignments.size()][intAssignments.size()];
 		for(int r=0; r<occurrences.length; r++)
 			for(int c=0; c<occurrences[r].length; c++)
 				newOccurrences[r][c]=occurrences[r][c];
-		System.out.println("Words:");
+		//System.out.println("Words:");
 		for(Integer originalRow:words.keySet()) {
-			System.out.println(words.get(originalRow));
+			//System.out.println(words.get(originalRow));
 			int newRow=intAssignments.get(words.get(originalRow));
 			for(Integer originalCol:words.keySet()) {
 				int newCol=intAssignments.get(words.get(originalCol));
 				try {
 				newOccurrences[newRow][newCol]+=merger[originalRow.intValue()][originalCol.intValue()];
 				}catch(Exception e){
-					System.out.println("Out of bounds: newRow="+newRow+", newCol="+newCol+", oRow="+originalRow+", oCol="+originalCol);}
+					//System.out.println("Out of bounds: newRow="+newRow+", newCol="+newCol+", oRow="+originalRow+", oCol="+originalCol);
+				}
 				if(newRow!=originalRow) {
-					System.out.println("Different rows: "+originalRow+" is now "+newRow);
+					//System.out.println("Different rows: "+originalRow+" is now "+newRow);
 					return;
 				}
 				if(newCol!=originalCol) {
-					System.out.println("Different cols: "+originalCol+" is now "+newCol);
+					//System.out.println("Different cols: "+originalCol+" is now "+newCol);
 					return;
 				}
 			}
