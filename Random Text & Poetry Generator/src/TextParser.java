@@ -325,12 +325,12 @@ public class TextParser {
 
 
 	/*
-	Under the brown land, mixing (framed by the brush, her daughter)
+	Under the brown land, framed by the brush, her daughter ("mixing" originally)
 	Winter
 	With a burnished throne
 	Burned green and gold.
 	Where the faint moonlight, the chapel, only
 	Fishing in soda water
-	Endeavors to folly and puts a fortnight dead mountain mouth (\n?) of empty rooms
+	Endeavors to folly //(stop here lol) and puts a fortnight dead mountain mouth (\n?) of empty rooms
 	 */
 }
