@@ -154,8 +154,13 @@ public class TextParser {
 			}
 			for (int col = 0; col < occs[0].length; col++)
 			{
-				if(total!=0)
-					probabilities[row][col] = (short) (32767 * ((double) occs[row][col]/total));
+				if(total!=0) {
+					//System.out.println("Total: " + total);
+					//System.out.println("occs[" + row + "][" + col + "] == " + occs[row][col]);
+					
+					probabilities[row][col] = (short) Math.ceil((Short.MAX_VALUE * ((double) occs[row][col]/total)));
+					//System.out.println("probabilities[" + row + "][" + col + "] == " + probabilities[row][col]);
+				}
 				else {
 					/*for(int r=0; r<occs.length; r++) {
 						//System.out.print("[");
@@ -165,6 +170,8 @@ public class TextParser {
 					}*/
 					probabilities[row][col]=0;
 				}
+				if(total!=0&&occs[row][col]!=0&&probabilities[row][col]==0)
+					System.out.println("ksajdhflksajhdf");
 				//probabilities[row][col] = (double)(occs[row][col])/total;
 			}
 		}

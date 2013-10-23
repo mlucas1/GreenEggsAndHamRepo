@@ -69,7 +69,8 @@ public class TextGenerator {
 		}catch(NullPointerException e) {
 			return null;
 		}
-		short random = (short) (32767*Math.random());
+		short random = (short) ((Short.MAX_VALUE)*Math.random());
+		System.out.println(random);
 		short[][] chanceArray = tp.getMarkovArray();
 		for (int x = 0; x < chanceArray[currWord].length; x++){
 			random -= chanceArray[currWord][x];
