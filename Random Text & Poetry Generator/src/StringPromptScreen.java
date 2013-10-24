@@ -22,6 +22,7 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 	private JScrollPane poemPane;
 	private JPanel poemPanel;
 	private JTextPane poemText;
+	private String entered;
 	
 	public StringPromptScreen()
 	{
@@ -38,7 +39,7 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 		constraints.gridwidth = 2;
 		poemText = new JTextPane();
 		poemPanel = new JPanel(new BorderLayout());
-		poemPanel.add(poemText );
+		poemPanel.add(poemText);
 		poemPane = new JScrollPane(poemPanel);
 		poemPane.setViewportView(poemText); 
 		manager.setConstraints(poemPane, constraints);
@@ -77,7 +78,7 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 		String buttonText = ((JButton)(source)).getText();
 		if (buttonText.equals("OK"))
 		{
-			
+			entered = poemText.getText();
 		}
 		else
 		{
