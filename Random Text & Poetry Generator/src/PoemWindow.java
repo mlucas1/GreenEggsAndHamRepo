@@ -19,11 +19,6 @@ public class PoemWindow extends JFrame{
 	private JPanel poemPanel;
 	private JTextPane poemText;
 	
-	public static void main(String[]args)
-	{
-		PoemWindow test = new PoemWindow(new Controller());
-	}
-	
 	public PoemWindow(Controller parent) {
 		super("Poetry");
 		control = parent;

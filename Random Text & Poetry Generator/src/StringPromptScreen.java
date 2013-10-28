@@ -22,17 +22,16 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 	private JScrollPane poemPane;
 	private JPanel poemPanel;
 	private JTextPane poemText;
-	private String entered;
 	
-	public StringPromptScreen()
+	public StringPromptScreen(Controller c)
 	{
 		super("Enter your text: ");
 		manager = new GridBagLayout();
 		constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
 		
-		constraints.weightx = 0.4;
-		constraints.weighty = 1.0;
+		constraints.weightx = 1.0;
+		constraints.weighty = 10.0;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridheight = 5;
@@ -44,33 +43,33 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 		poemPane.setViewportView(poemText); 
 		manager.setConstraints(poemPane, constraints);
 		this.add(poemPane);
+		validate();
 		
-		constraints.gridy = 1;
+		constraints.weighty = 1.0;
+		constraints.gridy = 6;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		cancel = new JButton("Cancel");
 		cancel.addActionListener(this);
 		manager.setConstraints(cancel, constraints);
 		this.add(cancel);
+		validate();
 		
-		constraints.gridy = 1;
+		constraints.gridx = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		ok = new JButton("OK");
 		ok.addActionListener(this);
 		manager.setConstraints(ok, constraints);
 		this.add(ok);
+		validate();
 		
+		control = c;
+		
+		setVisible(true);
 		setSize(300, 200);
 		setLayout(manager);
-	}
-	
-	
-	
-	public static String getUserInputString(Controller parent)
-	{
-		StringPromptScreen prompt = new StringPromptScreen();
-		
+		validate();
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -78,11 +77,9 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 		String buttonText = ((JButton)(source)).getText();
 		if (buttonText.equals("OK"))
 		{
-			entered = poemText.getText();
+			control.userText = poemText.getText();
+			control.actionPerformed(event);
 		}
-		else
-		{
-			
-		}
+		this.dispose();
 	}
 }
