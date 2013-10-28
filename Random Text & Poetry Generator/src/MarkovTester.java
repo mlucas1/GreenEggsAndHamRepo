@@ -10,9 +10,10 @@ public class MarkovTester {
 	public static void main(String[] args) throws IOException {
 		InputStream inOne=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
 		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
-		TextParser parser=new TextParser(inOne, inTwo, true);
+		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
+		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
 		TextGenerator generator=new TextGenerator(parser);
-		String result = generator.generateText(2);
+		String result = generator.generateText(10);
 		
 		JTextArea msg = new JTextArea(result);
 		msg.setLineWrap(true);

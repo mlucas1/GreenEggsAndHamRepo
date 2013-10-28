@@ -19,6 +19,8 @@ public class TextParser {
 	public int numUniqueTokens;
 	public int numWords;
 	private int averageLineLength;
+	
+	private InputStream rawText;
 
 	/*
 	 * The first-order Markov array of token frequencies
@@ -27,8 +29,10 @@ public class TextParser {
 	private short[][] probabilities;
 	private short[][] occurrences;
 
-	public TextParser(InputStream streamOne, InputStream streamTwo, boolean isRawText) {
+	public TextParser(InputStream streamOne, InputStream streamTwo, InputStream streamThree, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
+		rawText = streamThree;
+		
 		numUniqueTokens = 0;
 		intAssignments=new HashMap<String, Integer>();
 		stringAssignments=new HashMap<Integer, String>();
@@ -220,7 +224,7 @@ public class TextParser {
 	public void writeArray(File file) {
 		try {
 			if(file.length()!=0) {
-				TextParser merger=new TextParser(new FileInputStream(file), new FileInputStream(file), false);
+				TextParser merger=new TextParser(new FileInputStream(file), new FileInputStream(file), new FileInputStream(file), false);
 				merge(merger);
 			}
 			else if(!file.exists())
@@ -329,6 +333,10 @@ public class TextParser {
 	public HashMap<Integer, String> getStringAssignments() {
 		return stringAssignments;
 	}
+	
+	public InputStream getRawTextStream() {
+		return rawText;
+	}
 
 
 	/*
@@ -341,3 +349,4 @@ public class TextParser {
 	Endeavors to folly //(stop here lol) and puts a fortnight dead mountain mouth (\n?) of empty rooms
 	 */
 }
+
