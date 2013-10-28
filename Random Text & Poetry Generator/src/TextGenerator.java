@@ -108,12 +108,26 @@ public class TextGenerator {
 		}
 		return;
 	}
+	
 	public void readAloud(String s) {
 		try {
 			Runtime.getRuntime().exec("say " + "\"" + s + "\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String[] generateGame() {
+		String[] lines = new String[2];
+		
+		String realLine;
+		
+		String compLine = generateText(1);
+	
+		lines [0] = realLine;
+		lines [1] = compLine;
+		
+		return lines;
 	}
 	
 }
