@@ -1,9 +1,8 @@
-1. create writeArray method (for presets)
-2. create array of presets (array form or normal form, still undecided)
-3. create method allowing comparison of author and machine text (guessing game!)
-4. add Settings menu
-5. add Save Lines method (and a place to store them...) 
-6. add Hall of Fame database and button
+1. create array of presets (array form or normal form, still undecided)
+2. create method allowing comparison of author and machine text (guessing game!)
+3. add Settings menu
+4. add Save Lines method (and a place to store them...) 
+5. add Hall of Fame database and button
 
 feel free to add any ideas... 
 
