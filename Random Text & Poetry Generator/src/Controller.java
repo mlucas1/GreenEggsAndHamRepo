@@ -78,7 +78,7 @@ public class Controller implements ActionListener {
 			{
 				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]));
 				try {
-					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 				} catch (FileNotFoundException e) {
 					window.setPoemText("Cannot find file. ");
 				}
@@ -112,7 +112,7 @@ public class Controller implements ActionListener {
 		{
 			if (buttonText.equals("OK"))
 			{
-				parse = new TextParser(new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
+				parse = new TextParser(new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
 				generator = new TextGenerator(parse); 
 				textLoaded = true;
 			}
