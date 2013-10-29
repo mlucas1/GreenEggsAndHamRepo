@@ -62,12 +62,30 @@ public class IntPromptScreen extends JFrame implements ActionListener{
 		this.add(cancel);
 		validate();
 		
+		constraints.gridx = 1;
+		ok = new JButton("OK");
+		ok.addActionListener(this);
+		manager.setConstraints(ok, constraints);
+		this.add(ok);
+		validate();
+		
+		control = c;
+		
+		setVisible(true);
+		setSize(300, 200);
+		setLayout(manager);
+		validate();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	//TODO: continue this method
+	public void actionPerformed(ActionEvent event) {
+		Object source = event.getSource();
+		String buttonText = ((JButton)(source)).getText();
+		if (buttonText.equals("OK"))
+		{
+			control.getGenerator().saveLines(Integer.parseInt(firstNum.getText()), Integer.parseInt(lastNum.getText()));    
+		}
+		this.dispose();
 	}
 
 }

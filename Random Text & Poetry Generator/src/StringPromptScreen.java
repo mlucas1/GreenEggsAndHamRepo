@@ -56,8 +56,6 @@ public class StringPromptScreen extends JFrame implements ActionListener{
 		validate();
 		
 		constraints.gridx = 1;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
 		ok = new JButton("OK");
 		ok.addActionListener(this);
 		manager.setConstraints(ok, constraints);

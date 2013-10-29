@@ -118,4 +118,16 @@ public class Controller implements ActionListener {
 			}
 		}
 	}
+	
+	public TextGenerator getGenerator()
+	{
+		return generator;
+	}
+	
+	public void setUserText(String s)
+	{
+		userText = s;
+	}
+	
+	//TODO: continue adding these methods... 
 }
