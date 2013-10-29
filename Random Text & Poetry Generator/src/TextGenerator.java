@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -121,10 +122,13 @@ public class TextGenerator {
 		String[] lines = new String[2];
 		
 		String realLine;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(tp.getRawTextStream()));
 		
+		int lineNum = (int) Math.random()*tp.getNumLines();
+//TODO
 		String compLine = generateText(1);
-	
 		lines [0] = realLine;
+		
 		lines [1] = compLine;
 		
 		return lines;

@@ -1,7 +1,6 @@
 1. create method allowing comparison of author and machine text (guessing game!)
 2. finish readArray
 3. create array of presets (array form or normal form, still undecided)
-4. change doubles to shorts (memory conservation, need to make sure to somehow avoid rounding problems)
-5. link controller to model (assign actions to buttons)
+4. link controller to model (assign actions to buttons)
 
 feel free to add any ideas... 

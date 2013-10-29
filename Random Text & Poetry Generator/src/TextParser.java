@@ -18,6 +18,7 @@ public class TextParser {
 	private HashMap<Integer, String> stringAssignments;
 	public int numUniqueTokens;
 	public int numWords;
+	public int numLines;
 	private int averageLineLength;
 	
 	private InputStream rawText;
@@ -63,7 +64,7 @@ public class TextParser {
 		numUniqueTokens++;
 		
 		int totalWords = 0;
-		int numLines = 0;
+		numLines = 0;
 		
 		while (line != null) {
 			
@@ -320,6 +321,14 @@ public class TextParser {
 
 	public double getAvgLineLength() {
 		return averageLineLength;
+	}
+	
+	public int getNumWords() {
+		return numWords;
+	}
+	
+	public int getNumLines() {
+		return numLines;
 	}
 	
 	public short[][] getOccurrencesArray() {
