@@ -14,7 +14,8 @@ public class PoemWindow extends JFrame{
 	private GridBagLayout manager;
 	private GridBagConstraints constraints;
 	private JButton refreshButton, presetButton, userButton, 
-						readButton, storeButton, settingsButton;
+						readButton, storeButton, settingsButton,
+						gameButton, databaseButton;
 	private JScrollPane poemPane;
 	private JPanel poemPanel;
 	private JTextPane poemText;
@@ -67,10 +68,22 @@ public class PoemWindow extends JFrame{
 		manager.setConstraints(settingsButton, constraints);
 		this.add(settingsButton);
 		
+		constraints.gridy = 6;
+		gameButton = new JButton("Guessing Game");
+		gameButton.addActionListener(control);
+		manager.setConstraints(gameButton, constraints);
+		this.add(gameButton);
+		
+		constraints.gridy = 7;
+		databaseButton = new JButton("Hall of Fame");
+		databaseButton.addActionListener(control);
+		manager.setConstraints(databaseButton, constraints);
+		this.add(databaseButton);
+		
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.weightx = 10;
-		constraints.gridheight = 6;
+		constraints.gridheight = 8;
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
 		poemText = new JTextPane();
 		poemPanel = new JPanel(new BorderLayout());
