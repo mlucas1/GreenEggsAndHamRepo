@@ -1,8 +1,12 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.util.ArrayList;
 import java.io.InputStreamReader;
 
 /**
@@ -63,7 +67,6 @@ public class TextGenerator {
 	 */
 	public String getNextWord()
 	{
-		//TODO NEEDS TO BE REWRITTEN TO USE SHORT PROBABILITIES INSTEAD OF DOUBLES
 		String nextWord = "";
 		int currWord;
 		try {
@@ -101,7 +104,7 @@ public class TextGenerator {
 		}
 		BufferedWriter bw;
 		try {
-			bw = new BufferedWriter(new FileWriter(new File("Saved_Lines")));
+			bw = new BufferedWriter(new FileWriter(new File("Saved_Lines"), true));
 			bw.write(toSave);
 			bw.newLine();
 			bw.close();
@@ -109,6 +112,22 @@ public class TextGenerator {
 			e.printStackTrace();
 		}
 		return;
+	}
+	
+	public String hallOfFame() {
+		ArrayList<String> lines=new ArrayList<String>();
+		try {
+			BufferedReader br=new BufferedReader(new FileReader(new File("Saved_Lines")));
+			String line=br.readLine();
+			while(line!=null) {
+				lines.add(line);
+				line=br.readLine();
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lines.get((int)(Math.random()*lines.size()));
 	}
 	
 	public void readAloud(String s) {

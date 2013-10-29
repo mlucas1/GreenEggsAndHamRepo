@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +30,9 @@ public class Controller implements ActionListener {
 	
 	public Controller()
 	{
+		presets=new File("arrays").list();
+		for(int i=0; i<presets.length; i++)
+			presets[i]=presets[i].substring(0, presets[i].indexOf("."));
 		window = new PoemWindow(this);
 		lines = 25;
 		textLoaded = false;
