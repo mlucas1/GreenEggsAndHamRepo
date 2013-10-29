@@ -2,6 +2,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +19,13 @@ public class Controller implements ActionListener {
 	private boolean textLoaded;
 	private int lines;
 	private String[] presets;
+	public String userText;
+	StringPromptScreen userTextPrompt;
+	
+	public static void main(String[]args)
+	{
+		Controller c = new Controller();
+	}
 	
 	public Controller()
 	{
@@ -70,16 +78,16 @@ public class Controller implements ActionListener {
 			{
 				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]));
 				try {
-					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 				} catch (FileNotFoundException e) {
 					window.setPoemText("Cannot find file. ");
 				}
 				generator = new TextGenerator(parse);
+				textLoaded = true;
 			}
 			else if (buttonText.equals("User Text"))
 			{
-				String userText = JOptionPane.showInputDialog(null, "Enter your text: ");
-				
+				userTextPrompt = new StringPromptScreen(this);
 			}
 			else if (buttonText.equals("Save Line"))
 			{
@@ -98,6 +106,15 @@ public class Controller implements ActionListener {
 			else if (buttonText.equals("Settings"))
 			{
 				
+			}
+		}
+		else if (sourceFrame instanceof StringPromptScreen)
+		{
+			if (buttonText.equals("OK"))
+			{
+				parse = new TextParser(new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
+				generator = new TextGenerator(parse); 
+				textLoaded = true;
 			}
 		}
 	}
