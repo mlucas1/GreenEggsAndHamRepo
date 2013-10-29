@@ -126,6 +126,7 @@ public class TextGenerator {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(tp.getRawTextStream()));
 		try {
 			realLine = reader.readLine();
+			System.out.println(realLine);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,10 +135,19 @@ public class TextGenerator {
 		while (lineNum > 0) {
 			try {
 				realLine = reader.readLine();
+				System.out.println(realLine);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			lineNum--;
 		}
+		if (realLine.isEmpty())
+			try {
+				realLine = reader.readLine();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
 
 		String compLine = generateText(1);
 		lines [0] = realLine;
