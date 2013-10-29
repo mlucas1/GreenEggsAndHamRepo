@@ -63,7 +63,6 @@ public class TextGenerator {
 	 */
 	public String getNextWord()
 	{
-		//TODO NEEDS TO BE REWRITTEN TO USE SHORT PROBABILITIES INSTEAD OF DOUBLES
 		String nextWord = "";
 		int currWord;
 		try {
