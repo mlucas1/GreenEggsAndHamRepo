@@ -34,14 +34,11 @@ public class SettingsWindow extends JFrame {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the number of lines.");
 					numLines.setText("");
 					return;
-<<<<<<< HEAD
-=======
 				}
 				if(num<=0) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number for the number of lines.");
 					numLines.setText("");
 					return;
->>>>>>> 10c9bd0032f8c2ccf19b4376ad8e71ba64c1b339
 				}
 				controller.setNumLines(num);
 				//System.out.println("num lines is "+num);
@@ -109,7 +106,6 @@ public class SettingsWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				numLines.setText("20");
 				numLines.postActionEvent();
 				maxLineLength.setText("?");
