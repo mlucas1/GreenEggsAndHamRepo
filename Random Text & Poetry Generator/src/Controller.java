@@ -107,6 +107,10 @@ public class Controller implements ActionListener {
 					
 				}
 			}
+			else if (buttonText.equals("Guessing Game")) {
+				//TODO
+			}
+			
 			else if (buttonText.equals("Settings"))
 			{
 				
