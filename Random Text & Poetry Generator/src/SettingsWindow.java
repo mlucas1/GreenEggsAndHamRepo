@@ -29,6 +29,7 @@ public class SettingsWindow extends JFrame {
 				} catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
 					numLines.setText("");
+					return;
 				}
 				controller.setNumLines(num);
 
@@ -48,6 +49,7 @@ public class SettingsWindow extends JFrame {
 				} catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
 					maxLineLength.setText("");
+					return;
 				}
 				controller.setMaxLineLength(num);
 
@@ -67,6 +69,7 @@ public class SettingsWindow extends JFrame {
 				} catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
 					minLineLength.setText("");
+					return;
 				}
 				controller.setMinLineLength(num);
 

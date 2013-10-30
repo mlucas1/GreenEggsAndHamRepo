@@ -20,6 +20,7 @@ public class TextGenerator {
 	private TextParser tp;
 	private String currentWord;
 	private String poem;
+	public int numLines, maxLineLength, minLineLength;
 	
 	/*
 	 * Standard constructor, uses a TextParser for easy access to data.
@@ -31,22 +32,35 @@ public class TextGenerator {
 		}
 		tp = parse;
 		currentWord = "\n";
+		numLines = 20;
+		maxLineLength = -1;
+		minLineLength = 0;
 	}
 	
 	/*
 	 * Generates a poem based on the Textparser's data 
 	 * and user inputed number of lines
 	 */
-	public String generateText(int numLines)
+	public String generateText()
 	{
 		System.out.println("Generating text...");
-		int maxLineLength = (int)(tp.getAvgLineLength()*1.3);
+		if (maxLineLength == 0)
+		{
+			maxLineLength = (int)(tp.getAvgLineLength()*1.3);
+		}
 		poem = "";
 		int wordNum = 0;
 		int line = 1;
 		while (line <= numLines)
 		{
-			poem += getNextWord() + " ";
+			String temp = currentWord;
+			String next = getNextWord();
+			while (next.equals("\n") && wordNum < minLineLength)
+			{
+				currentWord = temp;
+				next = getNextWord();
+			}
+			poem += next + " ";
 			wordNum++;
 			if (currentWord.equals("\n") || wordNum >= maxLineLength)
 			{
@@ -167,8 +181,10 @@ public class TextGenerator {
 
 				e.printStackTrace();
 			}
-
-		String compLine = generateText(1);
+		int temp = numLines;
+		numLines = 1;
+		String compLine = generateText();
+		numLines = temp;
 		lines [0] = realLine;
 		lines [1] = compLine;
 		

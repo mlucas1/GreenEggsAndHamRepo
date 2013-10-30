@@ -61,7 +61,7 @@ public class Controller implements ActionListener {
 				 }
 				 else
 				 {
-					 window.setPoemText(generator.generateText(lines));
+					 window.setPoemText(generator.generateText());
 				 }
 			}
 			else if (buttonText.equals("Read Aloud"))
@@ -131,6 +131,29 @@ public class Controller implements ActionListener {
 	public void setUserText(String s)
 	{
 		userText = s;
+	}
+
+	public void setNumLines(int num) {
+		generator.numLines = num;
+	}
+
+	public void setMaxLineLength(int num) {
+		if (num == -1)
+		{
+			generator.maxLineLength = 20;
+		}
+		else
+		{
+			generator.maxLineLength = num;
+		}
+	}
+	
+	public void setMinLineLength(int num)
+	{
+		if (num <= generator.maxLineLength)
+		{
+			generator.minLineLength = num;
+		}
 	}
 	
 	//TODO: continue adding these methods... 
