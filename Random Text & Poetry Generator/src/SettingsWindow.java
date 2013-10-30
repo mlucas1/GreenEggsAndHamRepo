@@ -1,6 +1,9 @@
+import java.awt.AWTException;
 import java.awt.GridLayout;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,11 +30,12 @@ public class SettingsWindow extends JFrame {
 				try {
 					num=Integer.parseInt(numLines.getText());
 				} catch(NumberFormatException e) {
-					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the number of lines.");
 					numLines.setText("");
+					return;
 				}
-				controller.setNumLines(num);
-
+				//controller.setNumLines(num);
+				System.out.println("num lines is "+num);
 			}
 
 		});
@@ -46,11 +50,12 @@ public class SettingsWindow extends JFrame {
 				try {
 					num=Integer.parseInt(maxLineLength.getText());
 				} catch(NumberFormatException e) {
-					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the maximum line length.");
 					maxLineLength.setText("");
+					return;
 				}
-				controller.setMaxLineLength(num);
-
+				//controller.setMaxLineLength(num);
+				System.out.println("max is "+num);
 			}
 
 		});
@@ -65,10 +70,12 @@ public class SettingsWindow extends JFrame {
 				try {
 					num=Integer.parseInt(minLineLength.getText());
 				} catch(NumberFormatException e) {
-					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number.");
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the minimum line length.");
 					minLineLength.setText("");
+					return;
 				}
-				controller.setMinLineLength(num);
+				System.out.println("Min is "+num);
+				//controller.setMinLineLength(num);
 
 			}
 
@@ -85,8 +92,31 @@ public class SettingsWindow extends JFrame {
 
 		});
 		add(clear);
+		JButton confirm=new JButton("Confirm");
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(numLines.getText()!=null&&!numLines.getText().equals("")) {
+					numLines.dispatchEvent(new ActionEvent(numLines, 0, ""));
+				}
+				if(maxLineLength.getText()!=null&&!maxLineLength.getText().equals("")) {
+					maxLineLength.dispatchEvent(new ActionEvent(maxLineLength, 0, ""));
+				}
+				if(minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
+					minLineLength.dispatchEvent(new ActionEvent(minLineLength, 0, ""));
+				}
+
+			}
+
+		});
+		add(confirm);
 		setSize(400, 200);
 		setResizable(false);
 		setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new SettingsWindow(null);
 	}
 }
