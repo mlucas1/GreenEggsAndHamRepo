@@ -106,6 +106,10 @@ public class Controller implements ActionListener {
 					saveLinePrompt = new IntPromptScreen(this); 
 				}
 			}
+			else if (buttonText.equals("Guessing Game")) {
+				//TODO
+			}
+			
 			else if (buttonText.equals("Settings"))
 			{
 				
