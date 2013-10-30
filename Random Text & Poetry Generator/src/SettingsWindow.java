@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class SettingsWindow extends JFrame {
 	private JTextField numLines;
@@ -20,7 +21,7 @@ public class SettingsWindow extends JFrame {
 	public SettingsWindow(Controller c) {
 		super("Settings");
 		setLayout(new GridLayout(4, 2));
-		add(new JLabel("Number of lines: "));
+		add(new JLabel("Number of lines: ", SwingConstants.RIGHT));
 		numLines=new JTextField();
 		numLines.addActionListener(new ActionListener() {
 
@@ -34,13 +35,18 @@ public class SettingsWindow extends JFrame {
 					numLines.setText("");
 					return;
 				}
-				//controller.setNumLines(num);
-				System.out.println("num lines is "+num);
+				if(num<=0) {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number for the number of lines.");
+					numLines.setText("");
+					return;
+				}
+				controller.setNumLines(num);
+				//System.out.println("num lines is "+num);
 			}
 
 		});
 		add(numLines);
-		add(new JLabel("Maximum line length: "));
+		add(new JLabel("Maximum line length: ", SwingConstants.RIGHT));
 		maxLineLength=new JTextField();
 		maxLineLength.addActionListener(new ActionListener() {
 
@@ -51,16 +57,25 @@ public class SettingsWindow extends JFrame {
 					num=Integer.parseInt(maxLineLength.getText());
 				} catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the maximum line length.");
+					if(maxLineLength.getText().equals("?"))
+						num=-1;
+					else {
+						maxLineLength.setText("");
+						return;
+					}
+				}
+				if(num<=0) {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number for the maximum line length.");
 					maxLineLength.setText("");
 					return;
 				}
-				//controller.setMaxLineLength(num);
-				System.out.println("max is "+num);
+				controller.setMaxLineLength(num);
+				//System.out.println("max is "+num);
 			}
 
 		});
 		add(maxLineLength);
-		add(new JLabel("Minimum line length: "));
+		add(new JLabel("Minimum line length: ", SwingConstants.RIGHT));
 		minLineLength=new JTextField();
 		minLineLength.addActionListener(new ActionListener() {
 
@@ -74,8 +89,13 @@ public class SettingsWindow extends JFrame {
 					minLineLength.setText("");
 					return;
 				}
-				System.out.println("Min is "+num);
-				//controller.setMinLineLength(num);
+				if(num<=0) {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number for the minimum line length.");
+					minLineLength.setText("");
+					return;
+				}
+				//System.out.println("Min is "+num);
+				controller.setMinLineLength(num);
 
 			}
 
@@ -87,7 +107,12 @@ public class SettingsWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-
+				numLines.setText("20");
+				numLines.postActionEvent();
+				maxLineLength.setText("?");
+				maxLineLength.postActionEvent();
+				minLineLength.setText("0");
+				minLineLength.postActionEvent();
 			}
 
 		});
@@ -98,20 +123,20 @@ public class SettingsWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(numLines.getText()!=null&&!numLines.getText().equals("")) {
-					numLines.dispatchEvent(new ActionEvent(numLines, 0, ""));
+					numLines.postActionEvent();
 				}
 				if(maxLineLength.getText()!=null&&!maxLineLength.getText().equals("")) {
-					maxLineLength.dispatchEvent(new ActionEvent(maxLineLength, 0, ""));
+					maxLineLength.postActionEvent();
 				}
 				if(minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
-					minLineLength.dispatchEvent(new ActionEvent(minLineLength, 0, ""));
+					minLineLength.postActionEvent();
 				}
 
 			}
 
 		});
 		add(confirm);
-		setSize(400, 200);
+		setSize(325, 175);
 		setResizable(false);
 		setVisible(true);
 	}
