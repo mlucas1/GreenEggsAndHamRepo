@@ -8,9 +8,9 @@ import javax.swing.JTextArea;
 
 public class MarkovTester {
 	public static void main(String[] args) throws IOException {
-		InputStream inOne=new BufferedInputStream(new FileInputStream(new File("Whitman.txt")));
-		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("Whitman.txt")));
-		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Whitman.txt")));
+		InputStream inOne=new BufferedInputStream(new FileInputStream(new File("Eliot.txt")));
+		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("Eliot.txt")));
+		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Eliot.txt")));
 		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
 		TextGenerator generator=new TextGenerator(parser);
 		String result = generator.generateText(10);
