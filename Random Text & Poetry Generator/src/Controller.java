@@ -18,10 +18,10 @@ public class Controller implements ActionListener {
 	private TextGenerator generator;
 	private PoemWindow window;
 	private boolean textLoaded;
-	private int lines;
 	private String[] presets;
 	public String userText;
 	StringPromptScreen userTextPrompt;
+	IntPromptScreen saveLinePrompt;
 	
 	public static void main(String[]args)
 	{
@@ -34,7 +34,6 @@ public class Controller implements ActionListener {
 		for(int i=0; i<presets.length; i++)
 			presets[i]=presets[i].substring(0, presets[i].indexOf("."));
 		window = new PoemWindow(this);
-		lines = 25;
 		textLoaded = false;
 	}
 	
@@ -95,7 +94,7 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("Save Line"))
 			{
-				if (!textLoaded)
+				if (!textLoaded || window.getPoemText().length() < 1)
 				{
 					window.setPoemText("You must load and generate some text to" +
 	" analyze before saving poetry. \n Preset Styles gives a list of " +
@@ -104,7 +103,7 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
-					
+					saveLinePrompt = new IntPromptScreen(this); 
 				}
 			}
 			else if (buttonText.equals("Guessing Game")) {
@@ -158,6 +157,11 @@ public class Controller implements ActionListener {
 		{
 			generator.minLineLength = num;
 		}
+	}
+	
+	public PoemWindow getWindow()
+	{
+		return window;
 	}
 	
 	//TODO: continue adding these methods... 

@@ -12,9 +12,13 @@ public class MarkovTester {
 		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
 		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
 		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
+		
 		parser.writeArray(new File("Melville.txt"));
 		/**TextGenerator generator=new TextGenerator(parser);
 		String result = generator.generateText(10);
+
+		TextGenerator generator=new TextGenerator(parser);
+		String result = generator.generateText();
 		
 		JTextArea msg = new JTextArea(result);
 		msg.setLineWrap(true);

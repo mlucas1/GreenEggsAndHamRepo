@@ -83,9 +83,18 @@ public class IntPromptScreen extends JFrame implements ActionListener{
 		String buttonText = ((JButton)(source)).getText();
 		if (buttonText.equals("OK"))
 		{
-			control.getGenerator().saveLines(Integer.parseInt(firstNum.getText()), Integer.parseInt(lastNum.getText()));    
+			try{
+				control.getGenerator().saveLines(Integer.parseInt(firstNum.getText()), Integer.parseInt(lastNum.getText()));    
+				this.dispose();
+			} catch(Exception e)
+			{
+				control.getWindow().setPoemText("You must enter two integers. ");
+			}
 		}
-		this.dispose();
+		else
+		{
+			this.dispose();
+		}
 	}
 
 }
