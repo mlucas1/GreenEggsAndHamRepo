@@ -6,8 +6,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -24,9 +22,9 @@ public class Controller implements ActionListener {
 	IntPromptScreen saveLinePrompt;
 	
 	public static void main(String[]args)
-	{
+	{ 
 		Controller c = new Controller();
-	}
+	} 
 	
 	public Controller()
 	{
@@ -109,7 +107,10 @@ public class Controller implements ActionListener {
 			else if (buttonText.equals("Guessing Game")) {
 				//TODO
 			}
-			
+			else if (buttonText.equals("Hall of Fame"))
+			{
+				window.setPoemText(generator.hallOfFame());
+			}
 			else if (buttonText.equals("Settings"))
 			{
 				new SettingsWindow(this);

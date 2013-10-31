@@ -110,6 +110,11 @@ public class TextGenerator {
 
 	public void saveLines(int chosenStart, int chosenEnd)
 	{
+		chosenStart--; chosenEnd--;
+		if (chosenStart < 1 || chosenEnd > numLines || chosenStart > chosenEnd)
+		{
+			return;
+		}
 		String[] lines = poem.split("\n");
 		String toSave = "";
 		for (int x = chosenStart; x < chosenEnd; x++)
@@ -141,7 +146,7 @@ public class TextGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return lines.get((int)(Math.random()*lines.size()));
+		return lines.get((int)(Math.random()*lines.size())).replace(" @ ", "\n");	
 	}
 	
 	public void readAloud(String s) {
