@@ -80,7 +80,7 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("Preset Styles"))
 			{
-				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]));
+				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]))+".txt";
 				try {
 					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 				} catch (FileNotFoundException e) {
@@ -109,7 +109,7 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("Settings"))
 			{
-				
+				new SettingsWindow(this);
 			}
 		}
 		else if (sourceFrame instanceof StringPromptScreen)

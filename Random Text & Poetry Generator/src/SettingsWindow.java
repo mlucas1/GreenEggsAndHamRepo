@@ -20,6 +20,7 @@ public class SettingsWindow extends JFrame {
 
 	public SettingsWindow(Controller c) {
 		super("Settings");
+		controller=c;
 		setLayout(new GridLayout(4, 2));
 		add(new JLabel("Number of lines: ", SwingConstants.RIGHT));
 		numLines=new JTextField();
@@ -130,7 +131,7 @@ public class SettingsWindow extends JFrame {
 				if(minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
 					minLineLength.postActionEvent();
 				}
-
+				dispose();
 			}
 
 		});
@@ -140,7 +141,4 @@ public class SettingsWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new SettingsWindow(null);
-	}
 }

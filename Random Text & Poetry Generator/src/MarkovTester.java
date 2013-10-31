@@ -13,7 +13,7 @@ public class MarkovTester {
 		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Eliot.txt")));
 		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
 		TextGenerator generator=new TextGenerator(parser);
-		String result = generator.generateText(10);
+		String result = generator.generateText();
 		
 		/*
 		String[] game = generator.generateGame();
