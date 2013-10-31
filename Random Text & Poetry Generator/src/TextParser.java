@@ -224,11 +224,11 @@ public class TextParser {
 	 */
 	public void writeArray(File file) {
 		try {
-			if(file.length()!=0) {
+			/*if(file.length()!=0) {
 				TextParser merger=new TextParser(new FileInputStream(file), new FileInputStream(file), new FileInputStream(file), false);
 				merge(merger);
 			}
-			else if(!file.exists())
+			else if(!file.exists())*/
 				file.createNewFile();
 			BufferedWriter out=new BufferedWriter(new FileWriter(file));
 			for(int i=0; i<stringAssignments.size(); i++) {
