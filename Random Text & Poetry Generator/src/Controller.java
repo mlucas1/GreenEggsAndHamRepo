@@ -140,6 +140,11 @@ public class Controller implements ActionListener {
 	public void setNumLines(int num) {
 		generator.numLines = num;
 	}
+	
+	public int getNumLines()
+	{
+		return generator.numLines;
+	}
 
 	public void setMaxLineLength(int num) {
 		if (num == -1)
@@ -152,12 +157,26 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	public int getMaxLinelength()
+	{
+		return generator.maxLineLength;
+	}
+	
 	public void setMinLineLength(int num)
 	{
-		if (num <= generator.maxLineLength)
+		if (num == -1)
+		{
+			generator.minLineLength = 0;
+		}
+		else if (num <= generator.maxLineLength)
 		{
 			generator.minLineLength = num;
 		}
+	}
+	
+	public int getMinLineLength()
+	{
+		return generator.minLineLength;
 	}
 	
 	public PoemWindow getWindow()
