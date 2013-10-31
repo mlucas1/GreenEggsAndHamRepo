@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class TextGenerator {
 	public String generateText()
 	{
 		System.out.println("Generating text...");
-		if (maxLineLength == 0)
+		if (maxLineLength == -1)
 		{
 			maxLineLength = (int)(tp.getAvgLineLength()*1.3);
 		}
@@ -117,7 +116,7 @@ public class TextGenerator {
 		}
 		String[] lines = poem.split("\n");
 		String toSave = "";
-		for (int x = chosenStart; x < chosenEnd; x++)
+		for (int x = chosenStart; x <= chosenEnd; x++)
 		{
 			toSave += lines[x]+" @ ";
 		}
@@ -146,7 +145,8 @@ public class TextGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return lines.get((int)(Math.random()*lines.size())).replace(" @ ", "\n");	
+		poem = lines.get((int)(Math.random()*lines.size())).replace(" @ ", "\n");	
+		return poem;
 	}
 	
 	public void readAloud(String s) {
