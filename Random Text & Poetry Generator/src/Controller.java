@@ -188,7 +188,6 @@ public class Controller implements ActionListener {
 		return window;
 	}
 	
-	//TODO: continue adding these methods... 
 }
 /* 	Drip drop 
 	And if you feel free. 
