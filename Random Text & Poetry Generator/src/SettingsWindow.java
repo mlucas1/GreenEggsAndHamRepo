@@ -57,10 +57,10 @@ public class SettingsWindow extends JFrame {
 				try {
 					num=Integer.parseInt(maxLineLength.getText());
 				} catch(NumberFormatException e) {
-					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the maximum line length.");
 					if(maxLineLength.getText().equals("?"))
 						num=-1;
 					else {
+						JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the maximum line length.");
 						maxLineLength.setText("");
 						return;
 					}
@@ -90,10 +90,17 @@ public class SettingsWindow extends JFrame {
 					minLineLength.setText("");
 					return;
 				}
-				if(num<=0) {
+				if(num<0) {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number for the minimum line length.");
 					minLineLength.setText("");
 					return;
+				}
+				try {
+					if(num>Integer.parseInt(maxLineLength.getText()))
+						JOptionPane.showMessageDialog(SettingsWindow.this, "The minimum line length must be less than\nthe maximum line length.");
+				}catch(NumberFormatException e) {
+					if(num>controller.getMaxLineLength())
+						JOptionPane.showMessageDialog(SettingsWindow.this, "The minimum line length must be less than\nthe maximum line length.");
 				}
 				//System.out.println("Min is "+num);
 				controller.setMinLineLength(num);
@@ -122,23 +129,31 @@ public class SettingsWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(numLines.getText()!=null&&!numLines.getText().equals("")) {
+				if(numLines.getText()!=null&&!numLines.getText().equals("")
+						&&maxLineLength.getText()!=null&&!maxLineLength.getText().equals("")
+						&&minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
 					numLines.postActionEvent();
-				}
-				if(maxLineLength.getText()!=null&&!maxLineLength.getText().equals("")) {
 					maxLineLength.postActionEvent();
-				}
-				if(minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
 					minLineLength.postActionEvent();
+				}
+				else {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "You may not leave any fields blank.");
+					return;
 				}
 				dispose();
 			}
 
 		});
 		add(confirm);
+		numLines.setText(""+controller.getNumLines());
+		if(controller.getMaxLineLength()==-1)
+			maxLineLength.setText("?");
+		else
+			maxLineLength.setText(""+controller.getMaxLineLength());
+		minLineLength.setText(""+controller.getMinLineLength());
 		setSize(325, 175);
 		setResizable(false);
 		setVisible(true);
 	}
-	
+
 }

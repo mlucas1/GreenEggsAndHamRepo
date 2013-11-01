@@ -44,7 +44,7 @@ public class TextGenerator {
 	public String generateText()
 	{
 		System.out.println("Generating text...");
-		if (maxLineLength == 0)
+		if (maxLineLength == -1)
 		{
 			maxLineLength = (int)(tp.getAvgLineLength()*1.3);
 		}

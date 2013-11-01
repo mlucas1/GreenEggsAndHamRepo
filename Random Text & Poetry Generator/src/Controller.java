@@ -113,6 +113,10 @@ public class Controller implements ActionListener {
 			}
 			else if (buttonText.equals("Settings"))
 			{
+				if(generator==null) {
+					JOptionPane.showMessageDialog(window, "Please select or input some text first!");
+					return;
+				}
 				new SettingsWindow(this);
 			}
 		}
@@ -157,7 +161,7 @@ public class Controller implements ActionListener {
 		}
 	}
 	
-	public int getMaxLinelength()
+	public int getMaxLineLength()
 	{
 		return generator.maxLineLength;
 	}
