@@ -14,6 +14,8 @@ public class GameWindow extends JFrame {
 	public GameWindow(Controller c) {
 		super("Guessing Game");
 		
-		
+		setSize(500, 300);
+		setResizable(false);
+		setVisible(true);
 	}
 }

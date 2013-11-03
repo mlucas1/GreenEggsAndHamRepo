@@ -229,18 +229,21 @@ public class TextParser {
 				merge(merger);
 			}
 			else if(!file.exists())*/
-				file.createNewFile();
+			//	file.createNewFile();
 			BufferedWriter out=new BufferedWriter(new FileWriter(file));
 			for(int i=0; i<stringAssignments.size(); i++) {
 				String word=stringAssignments.get(i);
 				if(word.equals("\n"))
 					word="\\n";
 				out.write(word+" ");
+				System.out.println("Writing " + word + " ");
 			}
 			out.write("\n");
 			for(int r=0; r<occurrences.length; r++) {
-				for(int c=0; c<occurrences[r].length; c++)
+				for(int c=0; c<occurrences[r].length; c++) {
 					out.write(occurrences[r][c]+" ");
+					System.out.println("Writing " + occurrences[r][c] + " ");
+				}
 				out.write("\n");
 			}
 			out.write("\n"+averageLineLength);
