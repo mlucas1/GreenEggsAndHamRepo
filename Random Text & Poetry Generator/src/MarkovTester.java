@@ -8,17 +8,17 @@ import javax.swing.JTextArea;
 
 public class MarkovTester {
 	public static void main(String[] args) throws IOException {
-		InputStream inOne=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
-		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
-		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("Melville.txt")));
+		InputStream inOne=new BufferedInputStream(new FileInputStream(new File("TwelfthNight.txt")));
+		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("TwelfthNight.txt")));
+		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("TwelfthNight.txt")));
 		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
 		
 		// DO NOT DO THIS YET parser.writeArray(new File("Melville.txt"));
-		/**TextGenerator generator=new TextGenerator(parser);
-		String result = generator.generateText(10);
-
 		TextGenerator generator=new TextGenerator(parser);
 		String result = generator.generateText();
+
+		/*TextGenerator generator=new TextGenerator(parser);
+		String result = generator.generateText();*/
 		
 		JTextArea msg = new JTextArea(result);
 		msg.setLineWrap(true);
@@ -33,7 +33,7 @@ public class MarkovTester {
 		System.out.println(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
 		
 		JOptionPane.showMessageDialog(null, scrollPane);
-		**/
+		
 		
 	}
 }
