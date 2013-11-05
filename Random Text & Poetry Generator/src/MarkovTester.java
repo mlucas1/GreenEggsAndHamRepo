@@ -12,13 +12,12 @@ public class MarkovTester {
 		InputStream inTwo=new BufferedInputStream(new FileInputStream(new File("TwelfthNight.txt")));
 		InputStream inThree=new BufferedInputStream(new FileInputStream(new File("TwelfthNight.txt")));
 		TextParser parser=new TextParser(inOne, inTwo, inThree, true);
-		
-		// DO NOT DO THIS YET parser.writeArray(new File("Melville.txt"));
+		parser.writeArray(new File("arrays/Melville.txt"));
+		/**TextGenerator generator=new TextGenerator(parser);
+		String result = generator.generateText();*/
+
 		TextGenerator generator=new TextGenerator(parser);
 		String result = generator.generateText();
-
-		/*TextGenerator generator=new TextGenerator(parser);
-		String result = generator.generateText();*/
 		
 		JTextArea msg = new JTextArea(result);
 		msg.setLineWrap(true);
