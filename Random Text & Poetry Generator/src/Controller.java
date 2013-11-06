@@ -2,10 +2,13 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -20,6 +23,9 @@ public class Controller implements ActionListener {
 	public String userText;
 	StringPromptScreen userTextPrompt;
 	IntPromptScreen saveLinePrompt;
+	GameWindow game;
+	private int gameLines;
+	private boolean fakeIsTop;
 	
 	public static void main(String[]args)
 	{ 
@@ -33,6 +39,8 @@ public class Controller implements ActionListener {
 			presets[i]=presets[i].substring(0, presets[i].indexOf("."));
 		window = new PoemWindow(this);
 		textLoaded = false;
+		gameLines = 3;
+		fakeIsTop = false;
 	}
 	
 	public void loadText()
@@ -105,7 +113,45 @@ public class Controller implements ActionListener {
 				}
 			}
 			else if (buttonText.equals("Guessing Game")) {
-				//TODO
+				if (!textLoaded || window.getPoemText().length() < 1)
+				{
+					window.setPoemText("You must load and generate some text to" +
+	" analyze before playing the guessing game. \n Preset Styles gives a list of " +
+	"example text files for analysis, \n while User Text allows you to " +
+	"enter or upload your own text files. ");
+				}
+				else
+				{
+					window.setPoemText("Guessing Game! \n \n");
+					int random = (int)(Math.random()*2);
+					BufferedReader reader = new BufferedReader(new InputStreamReader(parse.getRawTextStream()));
+					//TODO: WUT   
+					String[] realPoem = parse.getRawTextStream().toString().split("\n");
+					int randomReal = (int)(Math.random()*(realPoem.length-gameLines));
+					String real = "";
+					int tempLineNum = generator.numLines;
+					generator.numLines = gameLines;
+					for (int x = randomReal; x < randomReal + gameLines; x++)
+					{
+						try{
+							real += realPoem[x] +"\n";
+						} catch (Exception e) { }
+					}
+					String fake = generator.generateText();
+					generator.numLines = tempLineNum;
+					if (random == 0)
+					{
+						window.appendText(real+"\n \n");
+						window.appendText(fake);
+						fakeIsTop = false;
+					}
+					else
+					{
+						window.appendText(fake+"\n \n");
+						window.appendText(real);
+						fakeIsTop = true;
+					}
+				}
 			}
 			else if (buttonText.equals("Hall of Fame"))
 			{
@@ -118,6 +164,36 @@ public class Controller implements ActionListener {
 					return;
 				}
 				new SettingsWindow(this);
+			}
+		}
+		else if (sourceFrame instanceof GameWindow)
+		{
+			if (!window.getPoemText().startsWith("Guessing Game!"))
+			{
+				window.appendText("The guessing game has since past. You failed, human.");
+			}
+			if (buttonText.equals("Top"))
+			{
+				window.appendText("\n \n");
+				if (fakeIsTop)
+				{
+					window.appendText("You are correct! Damn it...");
+				}
+				else
+				{
+					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the less human of our two races. ");
+				}
+			}
+			else
+			{
+				if (fakeIsTop)
+				{
+					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the less human of our two races. ");
+				}
+				else
+				{
+					window.appendText("You are correct! Damn it...");
+				}
 			}
 		}
 		else if (sourceFrame instanceof StringPromptScreen)
@@ -186,6 +262,11 @@ public class Controller implements ActionListener {
 	public PoemWindow getWindow()
 	{
 		return window;
+	}
+	
+	public void setGameLines(int newNum)
+	{
+		gameLines = newNum;
 	}
 	
 }

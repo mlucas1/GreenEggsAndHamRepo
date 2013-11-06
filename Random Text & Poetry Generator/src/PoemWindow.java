@@ -104,6 +104,13 @@ public class PoemWindow extends JFrame{
 		poemText.setText(poem);
 	}
 	
+	public void appendText(String text)
+	{
+		String curText = this.getPoemText();
+		curText += text;
+		this.setPoemText(curText);
+	}
+	
 	public String getPoemText()
 	{
 		return poemText.getText();
