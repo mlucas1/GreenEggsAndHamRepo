@@ -136,6 +136,26 @@ public class TextGenerator {
 		return;
 	}
 	
+	public void saveText(String s)
+	{
+		String[] lines = s.split("\n");
+		String toSave = "";
+		for (int x = 0; x < lines.length; x++)
+		{
+			toSave += lines[x] + " @ ";
+		}
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(new File("Saved_Lines"), true));
+			bw.write(toSave);
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+	
 	public String hallOfFame() {
 		ArrayList<String> lines=new ArrayList<String>();
 		try {

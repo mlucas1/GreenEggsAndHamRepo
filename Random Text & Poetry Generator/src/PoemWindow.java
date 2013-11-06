@@ -115,5 +115,10 @@ public class PoemWindow extends JFrame{
 	{
 		return poemText.getText();
 	}
+	
+	public String getSelectedText()
+	{
+		return poemText.getSelectedText();
+	}
 
 }

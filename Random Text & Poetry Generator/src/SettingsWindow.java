@@ -161,6 +161,7 @@ public class SettingsWindow extends JFrame {
 					numLines.postActionEvent();
 					maxLineLength.postActionEvent();
 					minLineLength.postActionEvent();
+					gameLines.postActionEvent();
 				}
 				else {
 					JOptionPane.showMessageDialog(SettingsWindow.this, "You may not leave any fields blank.");
@@ -177,6 +178,7 @@ public class SettingsWindow extends JFrame {
 		else
 			maxLineLength.setText(""+controller.getMaxLineLength());
 		minLineLength.setText(""+controller.getMinLineLength());
+		gameLines.setText(""+controller.getGameLines());
 		setSize(325, 210);
 		setResizable(false);
 		setVisible(true);

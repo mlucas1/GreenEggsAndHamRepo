@@ -10,7 +10,7 @@ public class ArrayWriter {
 		String fileName = "Shakespeare.txt";
 		String outputFileName = "Shakespeare.txt";
 		try {
-			TextParser parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+			TextParser parse = new TextParser(new File(outputFileName), outputFileName, new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 			parse.writeArray(new File(outputFileName));
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found. Fool.");

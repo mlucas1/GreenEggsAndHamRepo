@@ -87,7 +87,7 @@ public class Controller implements ActionListener {
 			{
 				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]))+".txt";
 				try {
-					parse = new TextParser(new File(fileName), null, new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+					parse = new TextParser(new File(fileName), fileName, new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 				} catch (FileNotFoundException e) {
 					window.setPoemText("Cannot find file. ");
 				}
@@ -109,7 +109,8 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
-					saveLinePrompt = new IntPromptScreen(this); 
+					//saveLinePrompt = new IntPromptScreen(this); 
+					generator.saveText(window.getSelectedText());
 				}
 			}
 			else if (buttonText.equals("Guessing Game")) {
@@ -122,13 +123,13 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
-					GameWindow game = new GameWindow(this);
+					game = new GameWindow(this);
 					window.setPoemText("Guessing Game! \n \n");
 					int random = (int)(Math.random()*2);
 					String[] options = generator.generateGame(gameLines);
 					if (random == 0)
 					{
-						window.appendText(options[0]+"\n---------\n");
+						window.appendText(options[0]+"\n \n");
 						window.appendText(options[1]);
 						fakeIsTop = false;
 					}
@@ -168,26 +169,30 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
-					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the less human of our two races. ");
+					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the lesser of our two races. ");
 				}
 			}
 			else
 			{
 				if (fakeIsTop)
 				{
-					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the less human of our two races. ");
+					window.appendText("Muwahahaha! The human fails again! \n I have subverted poetry and art itself. \n Soon you will be recognized as the lesser of our two races. ");
 				}
 				else
 				{
 					window.appendText("You are correct! Damn it...");
 				}
 			}
+			if (game != null)
+			{
+				game.dispose();
+			}
 		}
 		else if (sourceFrame instanceof StringPromptScreen)
 		{
 			if (buttonText.equals("OK"))
 			{
-				parse = new TextParser(null, userText, new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
+				parse = new TextParser(new File("User Text"), "User Text", new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
 				generator = new TextGenerator(parse); 
 				textLoaded = true;
 			}
@@ -256,6 +261,9 @@ public class Controller implements ActionListener {
 		gameLines = newNum;
 	}
 	
+	public int getGameLines() {
+		return gameLines;
+	}
 }
 /* 	Drip drop 
 	And if you feel free. 
