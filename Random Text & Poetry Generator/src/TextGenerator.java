@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.io.InputStreamReader;
@@ -157,41 +158,37 @@ public class TextGenerator {
 		}
 	}
 	
-	public String[] generateGame() {
-		String[] lines = new String[2];
-		
-		String realLine = "";
-		BufferedReader reader = new BufferedReader(new InputStreamReader(tp.getRawTextStream()));
+	public String[] generateGame(int gameLines) {
+		InputStream copy = tp.getRawTextStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(copy));
+		String nextLine = "";
+		String totalPoem = "";
 		try {
-			realLine = reader.readLine();
-			System.out.println(realLine);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		int lineNum = (int) (Math.random()*tp.getNumLines());
-		while (lineNum > 0) {
-			try {
-				realLine = reader.readLine();
-				System.out.println(realLine);
-			} catch (IOException e) {
-				e.printStackTrace();
+			nextLine = reader.readLine();
+			while (nextLine != null)
+			{
+				totalPoem += nextLine + "\n";
+				nextLine = reader.readLine();
 			}
-			lineNum--;
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		if (realLine.isEmpty())
-			try {
-				realLine = reader.readLine();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-		int temp = numLines;
-		numLines = 1;
-		String compLine = generateText();
-		numLines = temp;
-		lines [0] = realLine;
-		lines [1] = compLine;
+		String[] realPoem = totalPoem.split("\n  ");
+		int randomReal = (int)(Math.random()*(realPoem.length-gameLines));
+		String real = "";
+		int tempLineNum = numLines;
+		numLines = gameLines;
+		for (int x = randomReal; x < randomReal + gameLines; x++)
+		{
+			try{
+				real += realPoem[x] +"\n";
+			} catch (Exception e) { }
+		}
+		String fake = this.generateText();
+		numLines = tempLineNum;
+		String[] lines = new String[2];
+		lines [0] = real;
+		lines [1] = fake;
 		
 		return lines;
 	}

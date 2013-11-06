@@ -113,7 +113,7 @@ public class Controller implements ActionListener {
 				}
 			}
 			else if (buttonText.equals("Guessing Game")) {
-				if (!textLoaded || window.getPoemText().length() < 1)
+				if (!textLoaded)
 				{
 					window.setPoemText("You must load and generate some text to" +
 	" analyze before playing the guessing game. \n Preset Styles gives a list of " +
@@ -122,33 +122,20 @@ public class Controller implements ActionListener {
 				}
 				else
 				{
+					GameWindow game = new GameWindow(this);
 					window.setPoemText("Guessing Game! \n \n");
 					int random = (int)(Math.random()*2);
-					BufferedReader reader = new BufferedReader(new InputStreamReader(parse.getRawTextStream()));
-					//TODO: WUT   
-					String[] realPoem = parse.getRawTextStream().toString().split("\n");
-					int randomReal = (int)(Math.random()*(realPoem.length-gameLines));
-					String real = "";
-					int tempLineNum = generator.numLines;
-					generator.numLines = gameLines;
-					for (int x = randomReal; x < randomReal + gameLines; x++)
-					{
-						try{
-							real += realPoem[x] +"\n";
-						} catch (Exception e) { }
-					}
-					String fake = generator.generateText();
-					generator.numLines = tempLineNum;
+					String[] options = generator.generateGame(gameLines);
 					if (random == 0)
 					{
-						window.appendText(real+"\n \n");
-						window.appendText(fake);
+						window.appendText(options[0]+"\n \n");
+						window.appendText(options[1]);
 						fakeIsTop = false;
 					}
 					else
 					{
-						window.appendText(fake+"\n \n");
-						window.appendText(real);
+						window.appendText(options[1]+"\n \n");
+						window.appendText(options[0]);
 						fakeIsTop = true;
 					}
 				}
@@ -168,13 +155,13 @@ public class Controller implements ActionListener {
 		}
 		else if (sourceFrame instanceof GameWindow)
 		{
+			window.appendText("\n \n");
 			if (!window.getPoemText().startsWith("Guessing Game!"))
 			{
 				window.appendText("The guessing game has since past. You failed, human.");
 			}
 			if (buttonText.equals("Top"))
 			{
-				window.appendText("\n \n");
 				if (fakeIsTop)
 				{
 					window.appendText("You are correct! Damn it...");

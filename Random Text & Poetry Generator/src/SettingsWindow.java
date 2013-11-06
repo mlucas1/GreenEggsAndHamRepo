@@ -1,9 +1,6 @@
-import java.awt.AWTException;
 import java.awt.GridLayout;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,12 +13,13 @@ public class SettingsWindow extends JFrame {
 	private JTextField numLines;
 	private JTextField maxLineLength;
 	private JTextField minLineLength;
+	private JTextField gameLines;
 	private Controller controller;
 
 	public SettingsWindow(Controller c) {
 		super("Settings");
 		controller=c;
-		setLayout(new GridLayout(4, 2));
+		setLayout(new GridLayout(5, 2));
 		add(new JLabel("Number of lines: ", SwingConstants.RIGHT));
 		numLines=new JTextField();
 		numLines.addActionListener(new ActionListener() {
@@ -109,6 +107,31 @@ public class SettingsWindow extends JFrame {
 
 		});
 		add(minLineLength);
+		add(new JLabel("Lines for game: ", SwingConstants.RIGHT));
+		gameLines=new JTextField();
+		gameLines.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int num;
+				try {
+					num=Integer.parseInt(gameLines.getText());
+				} catch(NumberFormatException e) {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a number for the number of lines for the game.");
+					gameLines.setText("");
+					return;
+				}
+				if(num<=0||num>10) {
+					JOptionPane.showMessageDialog(SettingsWindow.this, "Please input a positive number less than 10 for the number of lines.");
+					gameLines.setText("");
+					return;
+				}
+				controller.setGameLines(num);
+				//System.out.println("num lines is "+num);
+			}
+
+		});
+		add(gameLines);
 		JButton clear=new JButton("Restore defaults");
 		clear.addActionListener(new ActionListener() {
 
@@ -120,6 +143,8 @@ public class SettingsWindow extends JFrame {
 				maxLineLength.postActionEvent();
 				minLineLength.setText("0");
 				minLineLength.postActionEvent();
+				gameLines.setText("2");
+				gameLines.postActionEvent();
 			}
 
 		});
@@ -131,7 +156,8 @@ public class SettingsWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(numLines.getText()!=null&&!numLines.getText().equals("")
 						&&maxLineLength.getText()!=null&&!maxLineLength.getText().equals("")
-						&&minLineLength.getText()!=null&&!minLineLength.getText().equals("")) {
+						&&minLineLength.getText()!=null&&!minLineLength.getText().equals("")
+						&&gameLines.getText()!=null&&!gameLines.getText().equals("")) {
 					numLines.postActionEvent();
 					maxLineLength.postActionEvent();
 					minLineLength.postActionEvent();
@@ -151,9 +177,9 @@ public class SettingsWindow extends JFrame {
 		else
 			maxLineLength.setText(""+controller.getMaxLineLength());
 		minLineLength.setText(""+controller.getMinLineLength());
-		setSize(325, 175);
+		setSize(325, 210);
 		setResizable(false);
 		setVisible(true);
 	}
-
+	
 }
