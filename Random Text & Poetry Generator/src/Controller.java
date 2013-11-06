@@ -87,7 +87,7 @@ public class Controller implements ActionListener {
 			{
 				String fileName = (String)(JOptionPane.showInputDialog(null, "Choose a preset:", "Preset Options", JOptionPane.INFORMATION_MESSAGE, null, presets, presets[0]))+".txt";
 				try {
-					parse = new TextParser(new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
+					parse = new TextParser(new File(fileName), null, new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), new BufferedInputStream(new FileInputStream(fileName)), true);
 				} catch (FileNotFoundException e) {
 					window.setPoemText("Cannot find file. ");
 				}
@@ -128,7 +128,7 @@ public class Controller implements ActionListener {
 					String[] options = generator.generateGame(gameLines);
 					if (random == 0)
 					{
-						window.appendText(options[0]+"\n \n");
+						window.appendText(options[0]+"\n---------\n");
 						window.appendText(options[1]);
 						fakeIsTop = false;
 					}
@@ -187,7 +187,7 @@ public class Controller implements ActionListener {
 		{
 			if (buttonText.equals("OK"))
 			{
-				parse = new TextParser(new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
+				parse = new TextParser(null, userText, new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), new BufferedInputStream(new ByteArrayInputStream(userText.getBytes())), true);
 				generator = new TextGenerator(parse); 
 				textLoaded = true;
 			}

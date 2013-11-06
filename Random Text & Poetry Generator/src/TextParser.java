@@ -21,6 +21,9 @@ public class TextParser {
 	public int numLines;
 	private int averageLineLength;
 	
+	private File file;
+	private String text;
+	
 	private InputStream rawText;
 
 	/*
@@ -30,8 +33,10 @@ public class TextParser {
 	private short[][] probabilities;
 	private short[][] occurrences;
 
-	public TextParser(InputStream streamOne, InputStream streamTwo, InputStream streamThree, boolean isRawText) {
+	public TextParser(File f, String t, InputStream streamOne, InputStream streamTwo, InputStream streamThree, boolean isRawText) {
 		//Creates a new TextParser that will read stream.
+		file=f;
+		text=t;
 		rawText = streamThree;
 		
 		numUniqueTokens = 0;
@@ -348,6 +353,14 @@ public class TextParser {
 	
 	public InputStream getRawTextStream() {
 		return rawText;
+	}
+	
+	public File getFile() {
+		return file;
+	}
+	
+	public String getText() {
+		return text;
 	}
 
 
