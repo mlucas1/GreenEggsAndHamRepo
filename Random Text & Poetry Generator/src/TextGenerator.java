@@ -1,11 +1,14 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.io.InputStreamReader;
 
@@ -159,8 +162,18 @@ public class TextGenerator {
 	}
 	
 	public String[] generateGame(int gameLines) {
-		InputStream copy = tp.getRawTextStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(copy));
+		//InputStream copy = tp.getRawTextStream();
+		BufferedReader reader=null;
+		if(tp.getFile()!=null) {
+			try {
+				reader = new BufferedReader(new InputStreamReader(new FileInputStream(tp.getFile())));
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+		}
+		else {
+			reader=new BufferedReader(new InputStreamReader(new BufferedInputStream(new ByteArrayInputStream(tp.getText().getBytes()))));
+		}
 		String nextLine = "";
 		String totalPoem = "";
 		try {
@@ -170,9 +183,11 @@ public class TextGenerator {
 				totalPoem += nextLine + "\n";
 				nextLine = reader.readLine();
 			}
+			reader.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
 		String[] realPoem = totalPoem.split("\n  ");
 		int randomReal = (int)(Math.random()*(realPoem.length-gameLines));
 		String real = "";
@@ -189,7 +204,6 @@ public class TextGenerator {
 		String[] lines = new String[2];
 		lines [0] = real;
 		lines [1] = fake;
-		
 		return lines;
 	}
 	
